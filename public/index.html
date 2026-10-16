@@ -1,424 +1,298 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>AG Apps Soluções | Marketing digital, sites e sistemas personalizados</title>
-<meta name="description" content="Agência de marketing digital e desenvolvimento de software. Social media, sites, lojas virtuais e sistemas sob medida para sua empresa crescer.">
-<meta name="theme-color" content="#101826">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Public+Sans:wght@400;500;600&display=swap" rel="stylesheet">
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
-<style>
-:root{
-  --ink:#101826; --ink-2:#1B2638; --paper:#F5F6F8; --line:#DDE1E8;
-  --blue:#2B59FF; --amber:#FFB020; --wa:#1FB855; --wa-dark:#17a04a; --muted:#5B6578;
-  --bs-body-font-family:'Public Sans',system-ui,sans-serif;
-}
-html{scroll-behavior:smooth;scroll-padding-top:80px}
-body{color:var(--ink);background:#fff;font-size:1.0625rem;line-height:1.65}
-h1,h2,h3,h4,.brand{font-family:'Bricolage Grotesque',sans-serif;letter-spacing:-.02em;line-height:1.08}
-a{color:var(--blue)}
-.container{max-width:1140px}
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>AG Apps Soluções | Marketing digital, sites e sistemas personalizados</title>
+		<meta name="description" content="Agência de marketing digital e desenvolvimento de software. Social media, sites, lojas virtuais e sistemas sob medida para sua empresa crescer.">
+		<meta name="theme-color" content="#101826">
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Public+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+		<style>
+		</style>
+	</head>
+	<body>
+	<!-- NAV -->
+	<nav class="navbar navbar-expand-lg fixed-top" id="nav">
+		<div class="container">
+			<a class="brand" href="#inicio"><span class="brand-mark"><i class="bi bi-lightning-charge-fill"></i></span>AG Apps <small>Soluções</small></a>
+			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu" aria-controls="menu" aria-expanded="false" aria-label="Abrir menu"><span class="navbar-toggler-icon"></span></button>
+			<div class="collapse navbar-collapse" id="menu">
+				<ul class="navbar-nav ms-auto align-items-lg-center gap-lg-1">
+					<li class="nav-item"><a class="nav-link" href="#servicos">Serviços</a></li>
+					<li class="nav-item"><a class="nav-link" href="#para-quem">Para quem</a></li>
+					<li class="nav-item"><a class="nav-link" href="#processo">Como trabalhamos</a></li>
+					<li class="nav-item"><a class="nav-link" href="#duvidas">Dúvidas</a></li>
+					<li class="nav-item ms-lg-2 mt-2 mt-lg-0"><a class="btn-wa btn-wa-sm wa-link" data-msg="Olá! Vim pelo site da AG Apps e gostaria de um orçamento." href="#" target="_blank" rel="noopener"><i class="bi bi-whatsapp"></i> Solicitar orçamento</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+	<!-- HERO -->
+	<header class="hero" id="inicio">
+		<div class="container">
+			<div class="row align-items-center g-5">
+				<div class="col-lg-7">
+					<h1 class="hero-in">Tecnologia, marketing e soluções digitais para sua empresa <span>crescer.</span></h1>
+					<p class="lead mt-4 hero-in d2">Ajudamos pequenos negócios e empresas a fortalecer a presença digital, conquistar novas oportunidades e organizar processos com tecnologia.</p>
+					<div class="d-flex flex-wrap gap-3 mt-4 hero-in d2">
+						<a class="btn-wa wa-link" data-msg="Olá! Vim pelo site da AG Apps e gostaria de um orçamento." href="#" target="_blank" rel="noopener"><i class="bi bi-whatsapp fs-5"></i> Falar no WhatsApp</a>
+						<a class="btn-ghost" href="#servicos">Conhecer os serviços</a>
+					</div>
+					<p class="hero-note mt-3 hero-in d2"><i class="bi bi-chat-dots me-1"></i> Conte sua necessidade e receba uma proposta adequada à sua realidade.</p>
+				</div>
+				<div class="col-lg-5 hero-in d2">
+					<div class="stage" aria-hidden="true">
+						<div class="post">Promoção da semana<small>Post + Stories prontos</small></div>
+						<div class="win">
+							<div class="win-bar"><i></i><i></i><i></i><span class="url">seunegocio.com.br</span></div>
+							<div class="win-body">
+								<div class="sk t"></div><div class="sk" style="width:92%"></div><div class="sk" style="width:76%"></div>
+								<div class="sk b"></div>
+								<pre class="code mb-0"><b>function</b> gerarPedido() {
+									<b>return</b> sistema.sobMedida();
+								}</pre>
+							</div>
+						</div>
+						<div class="chat"><div class="who"><i class="bi bi-whatsapp"></i> Novo contato</div>“Olá! Vi o site e queria um orçamento.”</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</header>
+	<!-- SERVIÇOS -->
+	<section class="services" id="servicos">
+		<div class="container">
+			<div class="row mb-5"><div class="col-lg-8">
+				<h2 class="sec-title">Três frentes que trabalham juntas</h2>
+				<p class="sec-sub">Você pode contratar um serviço isolado ou combinar os três conforme o momento da sua empresa. Escolha um para ver o que entregamos.</p>
+			</div></div>
+			<div class="row g-4">
+				<div class="col-lg-5">
+					<div class="svc-tabs" role="tablist" aria-label="Serviços">
+						<button class="svc-tab active" role="tab" aria-selected="true" data-target="#svc-mkt"><span class="ic"><i class="bi bi-megaphone"></i></span><span><strong>Marketing digital</strong><span class="d">Conteúdo, redes sociais e divulgação</span></span></button>
+						<button class="svc-tab" role="tab" aria-selected="false" data-target="#svc-sites"><span class="ic"><i class="bi bi-window-desktop"></i></span><span><strong>Criação de sites</strong><span class="d">Sites, landing pages e lojas virtuais</span></span></button>
+						<button class="svc-tab" role="tab" aria-selected="false" data-target="#svc-sys"><span class="ic"><i class="bi bi-cpu"></i></span><span><strong>Sistemas personalizados</strong><span class="d">Sistemas web sob medida e automações</span></span></button>
+					</div>
+				</div>
+				<div class="col-lg-7">
+					<div class="svc-panel">
+						<div class="svc-content show" id="svc-mkt" role="tabpanel">
+							<h3>Marketing digital</h3>
+							<p>Presença constante e estratégica para sua empresa ser lembrada e procurada.</p>
+							<ul>
+								<li><i class="bi bi-check2-circle"></i>Gestão de redes sociais</li>
+								<li><i class="bi bi-check2-circle"></i>Criação de artes, posts e Stories</li>
+								<li><i class="bi bi-check2-circle"></i>Divulgação de produtos e promoções</li>
+							</ul>
+							<a class="btn-wa wa-link" data-msg="Olá! Tenho interesse em marketing digital e gestão de redes sociais. Podemos conversar?" href="#" target="_blank" rel="noopener"><i class="bi bi-whatsapp"></i> Quero divulgar minha empresa</a>
+						</div>
+						<div class="svc-content" id="svc-sites" role="tabpanel">
+							<h3>Criação de sites</h3>
+							<p>Sites profissionais que apresentam seus serviços e geram oportunidades comerciais.</p>
+							<ul>
+								<li><i class="bi bi-check2-circle"></i>Sites institucionais e landing pages para campanhas</li>
+								<li><i class="bi bi-check2-circle"></i>Catálogos e lojas virtuais</li>
+								<li><i class="bi bi-check2-circle"></i>Hospedagem, manutenção e suporte</li>
+							</ul>
+							<a class="btn-wa wa-link" data-msg="Olá! Tenho interesse na criação de um site para minha empresa. Podemos conversar?" href="#" target="_blank" rel="noopener"><i class="bi bi-whatsapp"></i> Quero um site profissional</a>
+						</div>
+						<div class="svc-content" id="svc-sys" role="tabpanel">
+							<h3>Sistemas personalizados</h3>
+							<p>Soluções desenvolvidas para a realidade do seu negócio, tornando a gestão mais eficiente.</p>
+							<ul>
+								<li><i class="bi bi-check2-circle"></i>Sistemas de gestão empresarial</li>
+								<li><i class="bi bi-check2-circle"></i>Sistemas web sob medida e automação de processos</li>
+								<li><i class="bi bi-check2-circle"></i>Integrações e manutenção de sistemas</li>
+							</ul>
+							<a class="btn-wa wa-link" data-msg="Olá! Preciso de um sistema personalizado para minha empresa. Podemos conversar?" href="#" target="_blank" rel="noopener"><i class="bi bi-whatsapp"></i> Quero um sistema sob medida</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- PARA QUEM -->
+	<section id="para-quem">
+		<div class="container">
+			<div class="row mb-5"><div class="col-lg-8">
+				<h2 class="sec-title">Do pequeno comerciante à empresa com processos próprios</h2>
+				<p class="sec-sub">Atendemos negócios em fases diferentes, cada um com a solução e o investimento que fazem sentido.</p>
+			</div></div>
+			<div class="row g-4">
+				<div class="col-md-4"><div class="who-card"><i class="bi bi-shop"></i><h3>Comércio local</h3><p>Divulgue produtos e promoções nas redes sociais e seja encontrado por quem está perto de você.</p></div></div>
+				<div class="col-md-4"><div class="who-card"><i class="bi bi-briefcase"></i><h3>Prestadores de serviço</h3><p>Um site claro, com botão de contato direto, para transformar visitas em conversas e orçamentos.</p></div></div>
+				<div class="col-md-4"><div class="who-card"><i class="bi bi-building"></i><h3>Empresas em crescimento</h3><p>Sistemas e automações que organizam a rotina, reduzem tarefas manuais e acompanham o seu ritmo.</p></div></div>
+			</div>
+		</div>
+	</section>
+	<!-- PROCESSO -->
+	<section class="process" id="processo">
+		<div class="container">
+			<div class="row"><div class="col-lg-8">
+				<h2 class="sec-title">Como trabalhamos</h2>
+				<p class="sec-sub">Um caminho simples, do primeiro contato à entrega, com você acompanhando cada etapa.</p>
+			</div></div>
+			<div class="steps">
+				<div class="step"><div class="n">1</div><div><h3>Conversa inicial</h3><p>Você conta o que sua empresa precisa e qual resultado espera.</p></div></div>
+				<div class="step"><div class="n">2</div><div><h3>Proposta</h3><p>Apresentamos a solução e o orçamento, de acordo com a sua realidade.</p></div></div>
+				<div class="step"><div class="n">3</div><div><h3>Execução</h3><p>Desenvolvemos e validamos com você antes de publicar.</p></div></div>
+				<div class="step"><div class="n">4</div><div><h3>Suporte contínuo</h3><p>Manutenção, ajustes e evolução para o projeto seguir funcionando.</p></div></div>
+			</div>
+		</div>
+	</section>
+	<!-- FAQ -->
+	<section id="duvidas">
+		<div class="container">
+			<div class="row g-5">
+				<div class="col-lg-4">
+					<h2 class="sec-title">Dúvidas frequentes</h2>
+					<p class="sec-sub">Não encontrou o que procurava? Pergunte direto no WhatsApp.</p>
+					<a class="btn-wa wa-link mt-2" data-msg="Olá! Tenho uma dúvida sobre os serviços da AG Apps." href="#" target="_blank" rel="noopener"><i class="bi bi-whatsapp"></i> Tirar dúvida</a>
+				</div>
+				<div class="col-lg-8">
+					<div class="accordion" id="faq">
+						<div class="accordion-item"><h3 class="accordion-header"><button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#f1" aria-expanded="true">Como funciona o orçamento?</button></h3>
+							<div id="f1" class="accordion-collapse collapse show" data-bs-parent="#faq"><div class="accordion-body">Você descreve o que precisa pelo WhatsApp. Entendemos seu objetivo e enviamos uma proposta ajustada ao tamanho e à realidade do seu negócio.</div></div></div>
+							<div class="accordion-item"><h3 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#f2" aria-expanded="false">Posso contratar apenas um serviço?</button></h3>
+								<div id="f2" class="accordion-collapse collapse" data-bs-parent="#faq"><div class="accordion-body">Sim. Você pode começar por redes sociais, por um site ou por um sistema e acrescentar outros serviços quando fizer sentido.</div></div></div>
+								<div class="accordion-item"><h3 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#f3" aria-expanded="false">Vocês cuidam da hospedagem e da manutenção do site?</button></h3>
+									<div id="f3" class="accordion-collapse collapse" data-bs-parent="#faq"><div class="accordion-body">Sim. Oferecemos hospedagem, manutenção e suporte para que seu site continue no ar e atualizado.</div></div></div>
+									<div class="accordion-item"><h3 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#f4" aria-expanded="false">O sistema pode ser feito para o meu processo específico?</button></h3>
+										<div id="f4" class="accordion-collapse collapse" data-bs-parent="#faq"><div class="accordion-body">Sim. Desenvolvemos sistemas web sob medida, além de automações e integrações pensadas para a rotina da sua empresa.</div></div></div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</section>
+					<!-- CONTATO -->
+					<section class="contact" id="contato">
+						<div class="container">
+							<div class="row g-5 align-items-center">
+								<div class="col-lg-5">
+									<h2 class="sec-title">Vamos tirar seu projeto do papel?</h2>
+									<p class="sec-sub">Conte para nós o que sua empresa precisa. Vamos entender seu objetivo e apresentar uma solução adequada à sua realidade.</p>
+									<p class="hint mt-4"><i class="bi bi-info-circle me-1"></i> Ao enviar, o WhatsApp abre com sua mensagem pronta. Nenhum dado fica salvo neste site.</p>
+								</div>
+								<div class="col-lg-7">
+									<div class="form-box">
+										<form id="leadForm" novalidate>
+											<div class="row g-3">
+												<div class="col-md-6">
+													<label class="form-label" for="nome">Seu nome</label>
+													<input type="text" class="form-control" id="nome" placeholder="Como podemos te chamar?" required>
+													<div class="invalid-feedback">Informe seu nome.</div>
+												</div>
+												<div class="col-md-6">
+													<label class="form-label" for="empresa">Empresa (opcional)</label>
+													<input type="text" class="form-control" id="empresa" placeholder="Nome do seu negócio">
+												</div>
+												<div class="col-12">
+													<label class="form-label" for="servico">O que você procura?</label>
+													<select class="form-select" id="servico" required>
+														<option value="">Selecione um serviço</option>
+														<option>Marketing digital e redes sociais</option>
+														<option>Criação de site ou loja virtual</option>
+														<option>Sistema personalizado</option>
+														<option>Ainda não sei, quero conversar</option>
+													</select>
+													<div class="invalid-feedback">Escolha uma opção.</div>
+												</div>
+												<div class="col-12">
+													<label class="form-label" for="mensagem">Conte um pouco sobre o projeto</label>
+													<textarea class="form-control" id="mensagem" rows="3" placeholder="Ex.: tenho uma loja e quero divulgar melhor nas redes sociais"></textarea>
+												</div>
+												<div class="col-12">
+													<button type="submit" class="btn-wa w-100 justify-content-center"><i class="bi bi-whatsapp fs-5"></i> Enviar pelo WhatsApp</button>
+												</div>
+											</div>
+										</form>
+									</div>
+								</div>
+							</div>
+						</div>
+					</section>
+					<footer>
+						<div class="container d-flex flex-column flex-md-row justify-content-between align-items-center gap-2">
+							<span>&copy; <span id="ano"></span> AG Apps Soluções. Todos os direitos reservados.</span>
+							<a class="wa-link" data-msg="Olá! Vim pelo site da AG Apps." href="#" target="_blank" rel="noopener"><i class="bi bi-whatsapp me-1"></i> (33) 99143-7706</a>
+						</div>
+					</footer>
+					<a class="wa-float wa-link" id="waFloat" data-msg="Olá! Vim pelo site da AG Apps e gostaria de um orçamento." href="#" target="_blank" rel="noopener" aria-label="Falar no WhatsApp"><i class="bi bi-whatsapp"></i></a>
+					<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+					<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+					<script>
+						$(function() {
+						var WA = 'https://wa.me/5533991437706';
 
-/* Navbar */
-.navbar{padding:1rem 0;transition:background .25s,padding .25s,box-shadow .25s}
-.navbar.scrolled{background:rgba(16,24,38,.96);backdrop-filter:blur(8px);padding:.55rem 0;box-shadow:0 6px 24px rgba(0,0,0,.18)}
-.brand{font-weight:800;font-size:1.35rem;color:#fff;text-decoration:none;display:flex;align-items:center;gap:.6rem}
-.brand-mark{width:34px;height:34px;border-radius:9px;background:var(--blue);display:grid;place-items:center;font-size:.9rem;color:#fff}
-.brand small{font-weight:500;opacity:.7;font-size:.8em}
-.navbar .nav-link{color:rgba(255,255,255,.78);font-weight:500;padding:.5rem .9rem}
-.navbar .nav-link:hover,.navbar .nav-link.active{color:#fff}
-.navbar-toggler{border-color:rgba(255,255,255,.3)}
-.navbar-toggler-icon{filter:invert(1)}
+						function waUrl(msg) {
+							return WA + '?text=' + encodeURIComponent(msg);
+						}
 
-/* Buttons */
-.btn-wa{background:var(--wa);color:#fff;font-weight:600;border:0;border-radius:12px;padding:.85rem 1.5rem;display:inline-flex;align-items:center;gap:.6rem;transition:transform .15s,background .15s,box-shadow .15s}
-.btn-wa:hover{background:var(--wa-dark);color:#fff;transform:translateY(-2px);box-shadow:0 10px 24px rgba(31,184,85,.35)}
-.btn-wa:focus-visible,.btn-ghost:focus-visible{outline:3px solid var(--amber);outline-offset:3px}
-.btn-wa-sm{padding:.5rem 1rem;border-radius:10px;font-size:.95rem}
-.btn-ghost{border:1.5px solid rgba(255,255,255,.35);color:#fff;border-radius:12px;padding:.85rem 1.5rem;font-weight:600}
-.btn-ghost:hover{background:rgba(255,255,255,.1);color:#fff;border-color:#fff}
+						// Todos os links de WhatsApp usam a mensagem do data-msg
+						$('.wa-link').each(function() {
+							$(this).attr('href', waUrl($(this).data('msg')));
+						});
 
-/* Hero */
-.hero{background:var(--ink);color:#fff;padding:9rem 0 6rem;position:relative;overflow:hidden}
-.hero::before{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.045) 1px,transparent 1px);background-size:44px 44px;mask-image:radial-gradient(ellipse at 70% 40%,#000 20%,transparent 75%)}
-.hero .container{position:relative}
-.hero h1{font-size:clamp(2.5rem,5.4vw,4.2rem);font-weight:800}
-.hero h1 span{color:var(--amber)}
-.hero p.lead{color:rgba(255,255,255,.78);max-width:34rem;font-size:1.2rem}
-.hero-note{color:rgba(255,255,255,.6);font-size:.95rem}
-.hero-in{animation:rise .8s cubic-bezier(.2,.7,.2,1) both}
-.hero-in.d2{animation-delay:.15s}
-@keyframes rise{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
-@media (prefers-reduced-motion:reduce){.hero-in{animation:none}html{scroll-behavior:auto}*{transition:none!important}}
+						// Ano do rodapé
+						$('#ano').text(new Date().getFullYear());
 
-/* Hero visual: janela de navegador + conversa + código */
-.stage{position:relative;max-width:480px;margin-inline:auto;padding:1.2rem 0 2.5rem}
-.win{background:var(--ink-2);border:1px solid rgba(255,255,255,.12);border-radius:16px;box-shadow:0 30px 60px rgba(0,0,0,.4);overflow:hidden}
-.win-bar{display:flex;gap:6px;align-items:center;padding:.7rem 1rem;background:rgba(255,255,255,.05)}
-.win-bar i{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.25)}
-.win-bar .url{margin-left:.7rem;font-size:.78rem;color:rgba(255,255,255,.55);background:rgba(0,0,0,.25);border-radius:6px;padding:.1rem .7rem;flex:1}
-.win-body{padding:1.4rem}
-.sk{height:10px;border-radius:5px;background:rgba(255,255,255,.12);margin-bottom:.6rem}
-.sk.t{height:18px;width:70%;background:rgba(255,255,255,.85);margin-bottom:1rem}
-.sk.b{height:36px;width:42%;border-radius:9px;background:var(--blue);margin-top:1.1rem}
-.code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.78rem;color:#9FB3D6;margin:1.1rem 0 0;padding:.9rem 1rem;background:rgba(0,0,0,.28);border-radius:10px;line-height:1.55}
-.code b{color:var(--amber);font-weight:500}
-.chat{position:absolute;right:-6px;bottom:-4px;width:78%;background:#fff;color:var(--ink);border-radius:14px;padding:.9rem 1rem;box-shadow:0 18px 40px rgba(0,0,0,.35);font-size:.9rem;line-height:1.45}
-.chat .who{display:flex;align-items:center;gap:.5rem;font-weight:600;font-size:.82rem;margin-bottom:.35rem;color:var(--wa-dark)}
-.post{position:absolute;left:-14px;top:0;width:128px;background:var(--amber);color:var(--ink);border-radius:14px;padding:.8rem;transform:rotate(-5deg);box-shadow:0 14px 30px rgba(0,0,0,.3);font-family:'Bricolage Grotesque';font-weight:800;line-height:1.1;font-size:1rem}
-.post small{display:block;font-family:'Public Sans';font-weight:500;font-size:.72rem;margin-top:.4rem}
-@media(max-width:575px){.post{display:none}}
+						// Navbar muda ao rolar e botão flutuante aparece
+						function onScroll() {
+							var y = $(window).scrollTop();
+							$('#nav').toggleClass('scrolled', y > 40);
+							$('#waFloat').toggleClass('on', y > 500);
+						}
+						$(window).on('scroll', onScroll);
+						onScroll();
 
-/* Sections */
-section{padding:6rem 0}
-.sec-title{font-size:clamp(1.9rem,3.6vw,2.8rem);font-weight:800;margin-bottom:1rem}
-.sec-sub{color:var(--muted);max-width:40rem}
+						// Fecha o menu mobile ao clicar em um link
+						$('#menu .nav-link').on('click', function() {
+							$('#menu').collapse('hide');
+						});
 
-/* Serviços (abas interativas) */
-.services{background:var(--paper)}
-.svc-tabs{display:flex;flex-direction:column;gap:.75rem}
-.svc-tab{all:unset;cursor:pointer;display:flex;gap:1rem;align-items:center;padding:1.1rem 1.25rem;border-radius:14px;border:1.5px solid var(--line);background:#fff;transition:border-color .2s,box-shadow .2s,transform .2s}
-.svc-tab:hover{border-color:#b9c3d8}
-.svc-tab:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
-.svc-tab .ic{flex:none;width:46px;height:46px;border-radius:12px;display:grid;place-items:center;font-size:1.3rem;background:var(--paper);color:var(--ink);transition:.2s}
-.svc-tab strong{display:block;font-family:'Bricolage Grotesque';font-size:1.15rem;line-height:1.2}
-.svc-tab span.d{font-size:.92rem;color:var(--muted)}
-.svc-tab.active{border-color:var(--blue);box-shadow:0 12px 28px rgba(43,89,255,.14);transform:translateX(6px)}
-.svc-tab.active .ic{background:var(--blue);color:#fff}
-@media(max-width:991px){.svc-tab.active{transform:none}}
-.svc-panel{background:var(--ink);color:#fff;border-radius:20px;padding:2.4rem;height:100%;min-height:380px;display:flex;flex-direction:column}
-.svc-panel h3{font-size:1.9rem;font-weight:800}
-.svc-panel p{color:rgba(255,255,255,.75)}
-.svc-panel ul{list-style:none;padding:0;margin:1rem 0 1.8rem;display:grid;gap:.65rem}
-.svc-panel li{display:flex;gap:.7rem;align-items:flex-start}
-.svc-panel li i{color:var(--amber);margin-top:.2rem}
-.svc-panel .btn-wa{margin-top:auto;align-self:flex-start}
-.svc-content{display:none}.svc-content.show{display:flex;flex-direction:column;flex:1;animation:rise .35s both}
+						// Destaca o link do menu da seção visível
+						var $links = $('#menu .nav-link');
+						$(window).on('scroll', function() {
+							var pos = $(window).scrollTop() + 120,
+								current = '';
+							$('section[id]').each(function() {
+								if (pos >= $(this).offset().top) current = '#' + this.id;
+							});
+							$links.removeClass('active').filter('[href="' + current + '"]').addClass('active');
+						});
 
-/* Para quem */
-.who-card{border:1.5px solid var(--line);border-radius:16px;padding:1.6rem;height:100%;background:#fff}
-.who-card i{font-size:1.6rem;color:var(--blue)}
-.who-card h3{font-size:1.2rem;margin:.8rem 0 .4rem;font-weight:700}
-.who-card p{color:var(--muted);margin:0;font-size:.97rem}
+						// Abas de serviços
+						$('.svc-tab').on('click', function() {
+							var $t = $(this);
+							$('.svc-tab').removeClass('active').attr('aria-selected', 'false');
+							$t.addClass('active').attr('aria-selected', 'true');
+							$('.svc-content').removeClass('show');
+							$($t.data('target')).addClass('show');
+						});
 
-/* Processo */
-.process{background:var(--ink);color:#fff}
-.process .sec-sub{color:rgba(255,255,255,.7)}
-.steps{counter-reset:s;display:grid;gap:0;margin-top:3rem;position:relative}
-.step{display:grid;grid-template-columns:64px 1fr;gap:1.2rem;padding-bottom:2.2rem;position:relative}
-.step:not(:last-child)::before{content:"";position:absolute;left:31px;top:60px;bottom:0;width:2px;background:rgba(255,255,255,.18)}
-.step .n{width:62px;height:62px;border-radius:50%;border:2px solid var(--amber);display:grid;place-items:center;font-family:'Bricolage Grotesque';font-weight:800;font-size:1.3rem;color:var(--amber);background:var(--ink)}
-.step h3{font-size:1.3rem;margin:.9rem 0 .3rem;font-weight:700}
-.step p{color:rgba(255,255,255,.72);margin:0}
-@media(min-width:992px){
-  .steps{grid-template-columns:repeat(4,1fr);gap:1.5rem}
-  .step{grid-template-columns:1fr;padding-bottom:0}
-  .step:not(:last-child)::before{left:72px;right:-1.5rem;top:31px;bottom:auto;width:auto;height:2px}
-}
+						// Formulário -> mensagem pronta no WhatsApp
+						$('#leadForm').on('submit', function(e) {
+							e.preventDefault();
+							var nome = $.trim($('#nome').val()),
+								empresa = $.trim($('#empresa').val()),
+								servico = $('#servico').val(),
+								msg = $.trim($('#mensagem').val());
+							$('#nome').toggleClass('is-invalid', !nome);
+							$('#servico').toggleClass('is-invalid', !servico);
+							if (!nome || !servico) return;
 
-/* FAQ */
-.accordion-item{border:1.5px solid var(--line)!important;border-radius:14px!important;margin-bottom:.8rem;overflow:hidden}
-.accordion-button{font-family:'Bricolage Grotesque';font-weight:700;font-size:1.1rem;padding:1.2rem 1.4rem}
-.accordion-button:not(.collapsed){background:var(--paper);color:var(--ink);box-shadow:none}
-.accordion-body{color:var(--muted)}
-
-/* Contato */
-.contact{background:var(--paper)}
-.form-box{background:#fff;border-radius:20px;padding:2.2rem;box-shadow:0 20px 50px rgba(16,24,38,.08);border:1px solid var(--line)}
-.form-control,.form-select{border-radius:10px;padding:.8rem 1rem;border:1.5px solid var(--line)}
-.form-control:focus,.form-select:focus{border-color:var(--blue);box-shadow:0 0 0 .2rem rgba(43,89,255,.15)}
-.form-label{font-weight:600;font-size:.95rem}
-.hint{font-size:.88rem;color:var(--muted)}
-
-/* Footer */
-footer{background:var(--ink);color:rgba(255,255,255,.65);padding:2.5rem 0;font-size:.95rem}
-footer a{color:#fff;text-decoration:none}
-
-/* WhatsApp flutuante */
-.wa-float{position:fixed;right:20px;bottom:20px;z-index:1040;width:60px;height:60px;border-radius:50%;background:var(--wa);color:#fff;display:grid;place-items:center;font-size:1.9rem;box-shadow:0 10px 28px rgba(0,0,0,.3);transition:transform .2s,opacity .3s;opacity:0;transform:scale(.7);pointer-events:none}
-.wa-float.on{opacity:1;transform:none;pointer-events:auto}
-.wa-float:hover{color:#fff;background:var(--wa-dark);transform:scale(1.07)}
-.wa-float:focus-visible{outline:3px solid var(--amber);outline-offset:3px}
-</style>
-</head>
-<body>
-
-<!-- NAV -->
-<nav class="navbar navbar-expand-lg fixed-top" id="nav">
-  <div class="container">
-    <a class="brand" href="#inicio"><span class="brand-mark"><i class="bi bi-lightning-charge-fill"></i></span>AG Apps <small>Soluções</small></a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu" aria-controls="menu" aria-expanded="false" aria-label="Abrir menu"><span class="navbar-toggler-icon"></span></button>
-    <div class="collapse navbar-collapse" id="menu">
-      <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-1">
-        <li class="nav-item"><a class="nav-link" href="#servicos">Serviços</a></li>
-        <li class="nav-item"><a class="nav-link" href="#para-quem">Para quem</a></li>
-        <li class="nav-item"><a class="nav-link" href="#processo">Como trabalhamos</a></li>
-        <li class="nav-item"><a class="nav-link" href="#duvidas">Dúvidas</a></li>
-        <li class="nav-item ms-lg-2 mt-2 mt-lg-0"><a class="btn-wa btn-wa-sm wa-link" data-msg="Olá! Vim pelo site da AG Apps e gostaria de um orçamento." href="#" target="_blank" rel="noopener"><i class="bi bi-whatsapp"></i> Solicitar orçamento</a></li>
-      </ul>
-    </div>
-  </div>
-</nav>
-
-<!-- HERO -->
-<header class="hero" id="inicio">
-  <div class="container">
-    <div class="row align-items-center g-5">
-      <div class="col-lg-7">
-        <h1 class="hero-in">Tecnologia, marketing e soluções digitais para sua empresa <span>crescer.</span></h1>
-        <p class="lead mt-4 hero-in d2">Ajudamos pequenos negócios e empresas a fortalecer a presença digital, conquistar novas oportunidades e organizar processos com tecnologia.</p>
-        <div class="d-flex flex-wrap gap-3 mt-4 hero-in d2">
-          <a class="btn-wa wa-link" data-msg="Olá! Vim pelo site da AG Apps e gostaria de um orçamento." href="#" target="_blank" rel="noopener"><i class="bi bi-whatsapp fs-5"></i> Falar no WhatsApp</a>
-          <a class="btn-ghost" href="#servicos">Conhecer os serviços</a>
-        </div>
-        <p class="hero-note mt-3 hero-in d2"><i class="bi bi-chat-dots me-1"></i> Conte sua necessidade e receba uma proposta adequada à sua realidade.</p>
-      </div>
-      <div class="col-lg-5 hero-in d2">
-        <div class="stage" aria-hidden="true">
-          <div class="post">Promoção da semana<small>Post + Stories prontos</small></div>
-          <div class="win">
-            <div class="win-bar"><i></i><i></i><i></i><span class="url">seunegocio.com.br</span></div>
-            <div class="win-body">
-              <div class="sk t"></div><div class="sk" style="width:92%"></div><div class="sk" style="width:76%"></div>
-              <div class="sk b"></div>
-              <pre class="code mb-0"><b>function</b> gerarPedido() {
-  <b>return</b> sistema.sobMedida();
-}</pre>
-            </div>
-          </div>
-          <div class="chat"><div class="who"><i class="bi bi-whatsapp"></i> Novo contato</div>“Olá! Vi o site e queria um orçamento.”</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</header>
-
-<!-- SERVIÇOS -->
-<section class="services" id="servicos">
-  <div class="container">
-    <div class="row mb-5"><div class="col-lg-8">
-      <h2 class="sec-title">Três frentes que trabalham juntas</h2>
-      <p class="sec-sub">Você pode contratar um serviço isolado ou combinar os três conforme o momento da sua empresa. Escolha um para ver o que entregamos.</p>
-    </div></div>
-    <div class="row g-4">
-      <div class="col-lg-5">
-        <div class="svc-tabs" role="tablist" aria-label="Serviços">
-          <button class="svc-tab active" role="tab" aria-selected="true" data-target="#svc-mkt"><span class="ic"><i class="bi bi-megaphone"></i></span><span><strong>Marketing digital</strong><span class="d">Conteúdo, redes sociais e divulgação</span></span></button>
-          <button class="svc-tab" role="tab" aria-selected="false" data-target="#svc-sites"><span class="ic"><i class="bi bi-window-desktop"></i></span><span><strong>Criação de sites</strong><span class="d">Sites, landing pages e lojas virtuais</span></span></button>
-          <button class="svc-tab" role="tab" aria-selected="false" data-target="#svc-sys"><span class="ic"><i class="bi bi-cpu"></i></span><span><strong>Sistemas personalizados</strong><span class="d">Sistemas web sob medida e automações</span></span></button>
-        </div>
-      </div>
-      <div class="col-lg-7">
-        <div class="svc-panel">
-          <div class="svc-content show" id="svc-mkt" role="tabpanel">
-            <h3>Marketing digital</h3>
-            <p>Presença constante e estratégica para sua empresa ser lembrada e procurada.</p>
-            <ul>
-              <li><i class="bi bi-check2-circle"></i>Gestão de redes sociais</li>
-              <li><i class="bi bi-check2-circle"></i>Criação de artes, posts e Stories</li>
-              <li><i class="bi bi-check2-circle"></i>Divulgação de produtos e promoções</li>
-            </ul>
-            <a class="btn-wa wa-link" data-msg="Olá! Tenho interesse em marketing digital e gestão de redes sociais. Podemos conversar?" href="#" target="_blank" rel="noopener"><i class="bi bi-whatsapp"></i> Quero divulgar minha empresa</a>
-          </div>
-          <div class="svc-content" id="svc-sites" role="tabpanel">
-            <h3>Criação de sites</h3>
-            <p>Sites profissionais que apresentam seus serviços e geram oportunidades comerciais.</p>
-            <ul>
-              <li><i class="bi bi-check2-circle"></i>Sites institucionais e landing pages para campanhas</li>
-              <li><i class="bi bi-check2-circle"></i>Catálogos e lojas virtuais</li>
-              <li><i class="bi bi-check2-circle"></i>Hospedagem, manutenção e suporte</li>
-            </ul>
-            <a class="btn-wa wa-link" data-msg="Olá! Tenho interesse na criação de um site para minha empresa. Podemos conversar?" href="#" target="_blank" rel="noopener"><i class="bi bi-whatsapp"></i> Quero um site profissional</a>
-          </div>
-          <div class="svc-content" id="svc-sys" role="tabpanel">
-            <h3>Sistemas personalizados</h3>
-            <p>Soluções desenvolvidas para a realidade do seu negócio, tornando a gestão mais eficiente.</p>
-            <ul>
-              <li><i class="bi bi-check2-circle"></i>Sistemas de gestão empresarial</li>
-              <li><i class="bi bi-check2-circle"></i>Sistemas web sob medida e automação de processos</li>
-              <li><i class="bi bi-check2-circle"></i>Integrações e manutenção de sistemas</li>
-            </ul>
-            <a class="btn-wa wa-link" data-msg="Olá! Preciso de um sistema personalizado para minha empresa. Podemos conversar?" href="#" target="_blank" rel="noopener"><i class="bi bi-whatsapp"></i> Quero um sistema sob medida</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- PARA QUEM -->
-<section id="para-quem">
-  <div class="container">
-    <div class="row mb-5"><div class="col-lg-8">
-      <h2 class="sec-title">Do pequeno comerciante à empresa com processos próprios</h2>
-      <p class="sec-sub">Atendemos negócios em fases diferentes, cada um com a solução e o investimento que fazem sentido.</p>
-    </div></div>
-    <div class="row g-4">
-      <div class="col-md-4"><div class="who-card"><i class="bi bi-shop"></i><h3>Comércio local</h3><p>Divulgue produtos e promoções nas redes sociais e seja encontrado por quem está perto de você.</p></div></div>
-      <div class="col-md-4"><div class="who-card"><i class="bi bi-briefcase"></i><h3>Prestadores de serviço</h3><p>Um site claro, com botão de contato direto, para transformar visitas em conversas e orçamentos.</p></div></div>
-      <div class="col-md-4"><div class="who-card"><i class="bi bi-building"></i><h3>Empresas em crescimento</h3><p>Sistemas e automações que organizam a rotina, reduzem tarefas manuais e acompanham o seu ritmo.</p></div></div>
-    </div>
-  </div>
-</section>
-
-<!-- PROCESSO -->
-<section class="process" id="processo">
-  <div class="container">
-    <div class="row"><div class="col-lg-8">
-      <h2 class="sec-title">Como trabalhamos</h2>
-      <p class="sec-sub">Um caminho simples, do primeiro contato à entrega, com você acompanhando cada etapa.</p>
-    </div></div>
-    <div class="steps">
-      <div class="step"><div class="n">1</div><div><h3>Conversa inicial</h3><p>Você conta o que sua empresa precisa e qual resultado espera.</p></div></div>
-      <div class="step"><div class="n">2</div><div><h3>Proposta</h3><p>Apresentamos a solução e o orçamento, de acordo com a sua realidade.</p></div></div>
-      <div class="step"><div class="n">3</div><div><h3>Execução</h3><p>Desenvolvemos e validamos com você antes de publicar.</p></div></div>
-      <div class="step"><div class="n">4</div><div><h3>Suporte contínuo</h3><p>Manutenção, ajustes e evolução para o projeto seguir funcionando.</p></div></div>
-    </div>
-  </div>
-</section>
-
-<!-- FAQ -->
-<section id="duvidas">
-  <div class="container">
-    <div class="row g-5">
-      <div class="col-lg-4">
-        <h2 class="sec-title">Dúvidas frequentes</h2>
-        <p class="sec-sub">Não encontrou o que procurava? Pergunte direto no WhatsApp.</p>
-        <a class="btn-wa wa-link mt-2" data-msg="Olá! Tenho uma dúvida sobre os serviços da AG Apps." href="#" target="_blank" rel="noopener"><i class="bi bi-whatsapp"></i> Tirar dúvida</a>
-      </div>
-      <div class="col-lg-8">
-        <div class="accordion" id="faq">
-          <div class="accordion-item"><h3 class="accordion-header"><button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#f1" aria-expanded="true">Como funciona o orçamento?</button></h3>
-            <div id="f1" class="accordion-collapse collapse show" data-bs-parent="#faq"><div class="accordion-body">Você descreve o que precisa pelo WhatsApp. Entendemos seu objetivo e enviamos uma proposta ajustada ao tamanho e à realidade do seu negócio.</div></div></div>
-          <div class="accordion-item"><h3 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#f2" aria-expanded="false">Posso contratar apenas um serviço?</button></h3>
-            <div id="f2" class="accordion-collapse collapse" data-bs-parent="#faq"><div class="accordion-body">Sim. Você pode começar por redes sociais, por um site ou por um sistema e acrescentar outros serviços quando fizer sentido.</div></div></div>
-          <div class="accordion-item"><h3 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#f3" aria-expanded="false">Vocês cuidam da hospedagem e da manutenção do site?</button></h3>
-            <div id="f3" class="accordion-collapse collapse" data-bs-parent="#faq"><div class="accordion-body">Sim. Oferecemos hospedagem, manutenção e suporte para que seu site continue no ar e atualizado.</div></div></div>
-          <div class="accordion-item"><h3 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#f4" aria-expanded="false">O sistema pode ser feito para o meu processo específico?</button></h3>
-            <div id="f4" class="accordion-collapse collapse" data-bs-parent="#faq"><div class="accordion-body">Sim. Desenvolvemos sistemas web sob medida, além de automações e integrações pensadas para a rotina da sua empresa.</div></div></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- CONTATO -->
-<section class="contact" id="contato">
-  <div class="container">
-    <div class="row g-5 align-items-center">
-      <div class="col-lg-5">
-        <h2 class="sec-title">Vamos tirar seu projeto do papel?</h2>
-        <p class="sec-sub">Conte para nós o que sua empresa precisa. Vamos entender seu objetivo e apresentar uma solução adequada à sua realidade.</p>
-        <p class="hint mt-4"><i class="bi bi-info-circle me-1"></i> Ao enviar, o WhatsApp abre com sua mensagem pronta. Nenhum dado fica salvo neste site.</p>
-      </div>
-      <div class="col-lg-7">
-        <div class="form-box">
-          <form id="leadForm" novalidate>
-            <div class="row g-3">
-              <div class="col-md-6">
-                <label class="form-label" for="nome">Seu nome</label>
-                <input type="text" class="form-control" id="nome" placeholder="Como podemos te chamar?" required>
-                <div class="invalid-feedback">Informe seu nome.</div>
-              </div>
-              <div class="col-md-6">
-                <label class="form-label" for="empresa">Empresa (opcional)</label>
-                <input type="text" class="form-control" id="empresa" placeholder="Nome do seu negócio">
-              </div>
-              <div class="col-12">
-                <label class="form-label" for="servico">O que você procura?</label>
-                <select class="form-select" id="servico" required>
-                  <option value="">Selecione um serviço</option>
-                  <option>Marketing digital e redes sociais</option>
-                  <option>Criação de site ou loja virtual</option>
-                  <option>Sistema personalizado</option>
-                  <option>Ainda não sei, quero conversar</option>
-                </select>
-                <div class="invalid-feedback">Escolha uma opção.</div>
-              </div>
-              <div class="col-12">
-                <label class="form-label" for="mensagem">Conte um pouco sobre o projeto</label>
-                <textarea class="form-control" id="mensagem" rows="3" placeholder="Ex.: tenho uma loja e quero divulgar melhor nas redes sociais"></textarea>
-              </div>
-              <div class="col-12">
-                <button type="submit" class="btn-wa w-100 justify-content-center"><i class="bi bi-whatsapp fs-5"></i> Enviar pelo WhatsApp</button>
-              </div>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<footer>
-  <div class="container d-flex flex-column flex-md-row justify-content-between align-items-center gap-2">
-    <span>&copy; <span id="ano"></span> AG Apps Soluções. Todos os direitos reservados.</span>
-    <a class="wa-link" data-msg="Olá! Vim pelo site da AG Apps." href="#" target="_blank" rel="noopener"><i class="bi bi-whatsapp me-1"></i> (33) 99143-7706</a>
-  </div>
-</footer>
-
-<a class="wa-float wa-link" id="waFloat" data-msg="Olá! Vim pelo site da AG Apps e gostaria de um orçamento." href="#" target="_blank" rel="noopener" aria-label="Falar no WhatsApp"><i class="bi bi-whatsapp"></i></a>
-
-<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-<script>
-$(function () {
-  var WA = 'https://wa.me/5533991437706';
-  function waUrl(msg) { return WA + '?text=' + encodeURIComponent(msg); }
-
-  // Todos os links de WhatsApp usam a mensagem do data-msg
-  $('.wa-link').each(function () { $(this).attr('href', waUrl($(this).data('msg'))); });
-
-  // Ano do rodapé
-  $('#ano').text(new Date().getFullYear());
-
-  // Navbar muda ao rolar e botão flutuante aparece
-  function onScroll() {
-    var y = $(window).scrollTop();
-    $('#nav').toggleClass('scrolled', y > 40);
-    $('#waFloat').toggleClass('on', y > 500);
-  }
-  $(window).on('scroll', onScroll); onScroll();
-
-  // Fecha o menu mobile ao clicar em um link
-  $('#menu .nav-link').on('click', function () { $('#menu').collapse('hide'); });
-
-  // Destaca o link do menu da seção visível
-  var $links = $('#menu .nav-link');
-  $(window).on('scroll', function () {
-    var pos = $(window).scrollTop() + 120, current = '';
-    $('section[id]').each(function () { if (pos >= $(this).offset().top) current = '#' + this.id; });
-    $links.removeClass('active').filter('[href="' + current + '"]').addClass('active');
-  });
-
-  // Abas de serviços
-  $('.svc-tab').on('click', function () {
-    var $t = $(this);
-    $('.svc-tab').removeClass('active').attr('aria-selected', 'false');
-    $t.addClass('active').attr('aria-selected', 'true');
-    $('.svc-content').removeClass('show');
-    $($t.data('target')).addClass('show');
-  });
-
-  // Formulário -> mensagem pronta no WhatsApp
-  $('#leadForm').on('submit', function (e) {
-    e.preventDefault();
-    var nome = $.trim($('#nome').val()), empresa = $.trim($('#empresa').val()),
-        servico = $('#servico').val(), msg = $.trim($('#mensagem').val());
-    $('#nome').toggleClass('is-invalid', !nome);
-    $('#servico').toggleClass('is-invalid', !servico);
-    if (!nome || !servico) return;
-
-    var texto = 'Olá! Meu nome é ' + nome + (empresa ? ' (' + empresa + ')' : '') +
-      '. Tenho interesse em: ' + servico + '.' + (msg ? '\n\n' + msg : '');
-    window.open(waUrl(texto), '_blank', 'noopener');
-  });
-  $('#nome, #servico').on('input change', function () { $(this).removeClass('is-invalid'); });
-});
-</script>
-</body>
+							var texto = 'Olá! Meu nome é ' + nome + (empresa ? ' (' + empresa + ')' : '') +
+								'. Tenho interesse em: ' + servico + '.' + (msg ? '\n\n' + msg : '');
+							window.open(waUrl(texto), '_blank', 'noopener');
+						});
+						$('#nome, #servico').on('input change', function() {
+							$(this).removeClass('is-invalid');
+						});
+					});
+					</script>
+	</body>
 </html>
