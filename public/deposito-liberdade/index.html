@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Prévia conceitual do Depósito Liberdade, comércio local de materiais de construção no bairro Liberdade, em Santa Luzia - MG. Entre em contato pelo WhatsApp." />
+  <meta name="theme-color" content="#123d35" />
+  <title>Depósito Liberdade | Materiais de construção em Santa Luzia - MG</title>
+  <style>
+    :root {
+      --green-950: #092b25;
+      --green-900: #123d35;
+      --green-800: #1b5b4c;
+      --green-700: #287762;
+      --green-100: #e4f1eb;
+      --green-50: #f2f8f5;
+      --yellow: #f2c94c;
+      --yellow-soft: #fff5cb;
+      --ink: #18231f;
+      --muted: #60706a;
+      --line: #d9e3de;
+      --white: #ffffff;
+      --shadow: 0 18px 50px rgba(9, 43, 37, .12);
+      --radius-lg: 28px;
+      --radius-md: 18px;
+      --radius-sm: 12px;
+      --max: 1160px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--white);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    img { max-width: 100%; display: block; }
+    a { color: inherit; }
+    :focus-visible { outline: 3px solid var(--yellow); outline-offset: 3px; }
+    .skip-link { position: absolute; left: 1rem; top: -4rem; z-index: 20; padding: .75rem 1rem; border-radius: 8px; background: var(--yellow); color: var(--green-950); font-weight: 800; }
+    .skip-link:focus { top: 1rem; }
+    .container { width: min(calc(100% - 2rem), var(--max)); margin-inline: auto; }
+    .eyebrow { color: var(--green-700); text-transform: uppercase; letter-spacing: .14em; font-size: .75rem; font-weight: 800; margin: 0 0 .8rem; }
+    h1, h2, h3 { line-height: 1.12; letter-spacing: -.035em; margin: 0; }
+    h1 { font-size: clamp(2.5rem, 7vw, 5.4rem); max-width: 760px; }
+    h2 { font-size: clamp(2rem, 4vw, 3.25rem); }
+    h3 { font-size: 1.22rem; }
+    p { margin: 0; }
+    .muted { color: var(--muted); }
+    .note { font-size: .78rem; color: var(--muted); }
+    .button { display: inline-flex; align-items: center; justify-content: center; gap: .55rem; min-height: 48px; padding: .8rem 1.1rem; border: 0; border-radius: 999px; font-weight: 800; text-decoration: none; cursor: pointer; transition: transform .2s ease, box-shadow .2s ease, background .2s ease; }
+    .button:hover { transform: translateY(-2px); }
+    .button-primary { background: var(--yellow); color: var(--green-950); box-shadow: 0 8px 20px rgba(242, 201, 76, .25); }
+    .button-secondary { background: var(--green-900); color: var(--white); }
+    .button-ghost { background: transparent; color: var(--green-900); border: 1px solid var(--line); }
+    .button-small { min-height: 40px; padding: .55rem .9rem; font-size: .9rem; }
+
+    .topbar { background: var(--green-950); color: #d9ebe4; font-size: .83rem; }
+    .topbar-inner { display: flex; justify-content: space-between; gap: 1rem; align-items: center; min-height: 38px; }
+    .topbar a { color: var(--yellow); font-weight: 800; text-decoration: none; }
+
+    header { position: sticky; top: 0; z-index: 10; background: rgba(255,255,255,.94); backdrop-filter: blur(14px); border-bottom: 1px solid rgba(217,227,222,.75); }
+    .nav-wrap { min-height: 74px; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+    .brand { display: inline-flex; align-items: center; gap: .7rem; text-decoration: none; color: var(--green-950); font-weight: 900; letter-spacing: -.04em; font-size: 1.1rem; }
+    .brand-mark { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 13px; color: var(--green-950); background: var(--yellow); font-weight: 950; }
+    .nav-toggle { display: none; border: 1px solid var(--line); background: var(--white); color: var(--green-950); border-radius: 10px; padding: .55rem .7rem; font-size: 1.2rem; }
+    nav ul { display: flex; align-items: center; gap: 1.3rem; margin: 0; padding: 0; list-style: none; }
+    nav a { color: var(--muted); font-size: .92rem; font-weight: 700; text-decoration: none; }
+    nav a:hover { color: var(--green-800); }
+
+    .hero { overflow: hidden; padding: clamp(4rem, 10vw, 8rem) 0 5rem; background: radial-gradient(circle at 84% 10%, rgba(242,201,76,.3), transparent 28%), linear-gradient(125deg, var(--green-50), #fff 68%); }
+    .hero-grid { display: grid; grid-template-columns: 1.15fr .85fr; align-items: center; gap: clamp(2rem, 7vw, 6rem); }
+    .hero-copy p { max-width: 590px; margin-top: 1.4rem; color: var(--muted); font-size: clamp(1.05rem, 2vw, 1.25rem); }
+    .actions { display: flex; flex-wrap: wrap; gap: .8rem; margin-top: 2rem; }
+    .hero-visual { position: relative; min-height: 390px; display: grid; place-items: center; }
+    .visual-card { position: relative; isolation: isolate; width: min(100%, 430px); aspect-ratio: 1 / 1.03; overflow: hidden; border-radius: 34px; background: linear-gradient(145deg, #bdd8ca, #6f9e8c); box-shadow: var(--shadow); }
+    .visual-card::before { content: ""; position: absolute; inset: 12% 9% 0; border-radius: 48% 48% 0 0; background: linear-gradient(145deg, rgba(255,255,255,.58), rgba(255,255,255,.08)); }
+    .visual-card::after { content: "IMAGEM DE DEMONSTRAÇÃO"; position: absolute; left: 1.4rem; bottom: 1.2rem; padding: .45rem .65rem; border-radius: 8px; background: rgba(9,43,37,.78); color: #fff; font-size: .68rem; letter-spacing: .1em; font-weight: 800; }
+    .store-shape { position: absolute; left: 16%; right: 16%; bottom: 12%; height: 42%; border-radius: 14px 14px 4px 4px; background: var(--green-950); box-shadow: 0 -74px 0 -56px var(--yellow); }
+    .store-shape::before { content: ""; position: absolute; left: 10%; right: 10%; top: 16%; height: 18%; border-radius: 5px; background: var(--yellow); box-shadow: 0 48px 0 -6px #527d6f, 0 48px 0 2px #294c42; }
+    .floating-card { position: absolute; right: -1rem; bottom: 2.2rem; max-width: 205px; padding: 1rem; border: 1px solid rgba(255,255,255,.7); border-radius: 16px; background: rgba(255,255,255,.9); box-shadow: var(--shadow); }
+    .rating { color: #a87600; font-weight: 900; font-size: 1.2rem; }
+
+    section { padding: 6rem 0; }
+    .section-head { max-width: 680px; margin-bottom: 2.4rem; }
+    .section-head p { color: var(--muted); margin-top: 1rem; font-size: 1.05rem; }
+    .feature-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+    .feature, .contact-card, .form-card { padding: 1.5rem; border: 1px solid var(--line); border-radius: var(--radius-md); background: var(--white); }
+    .feature { min-height: 190px; }
+    .icon { display: grid; place-items: center; width: 42px; height: 42px; margin-bottom: 1.1rem; border-radius: 12px; background: var(--green-100); color: var(--green-800); font-size: 1.25rem; font-weight: 900; }
+    .feature p { margin-top: .55rem; color: var(--muted); font-size: .96rem; }
+    .band { background: var(--green-900); color: var(--white); }
+    .band .eyebrow { color: var(--yellow); }
+    .band p { color: #c9ddd5; }
+    .band-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; }
+    .band .button-ghost { color: var(--white); border-color: rgba(255,255,255,.3); }
+    .info-list { display: grid; gap: .8rem; margin: 1.5rem 0 0; padding: 0; list-style: none; }
+    .info-list li { display: flex; gap: .75rem; align-items: flex-start; color: #d9ebe4; }
+    .info-list strong { color: var(--white); }
+    .contact-grid { display: grid; grid-template-columns: .8fr 1.2fr; gap: 1rem; align-items: start; }
+    .contact-card { background: var(--green-50); border-color: transparent; }
+    .contact-card + .contact-card { background: var(--white); border-color: var(--line); }
+    .contact-item { padding: 1rem 0; border-bottom: 1px solid var(--line); }
+    .contact-item:last-child { border-bottom: 0; }
+    .contact-item strong { display: block; margin-bottom: .2rem; }
+    .contact-item a { color: var(--green-800); font-weight: 800; }
+    form { display: grid; gap: 1rem; margin-top: 1.2rem; }
+    label { font-size: .86rem; font-weight: 800; }
+    input, textarea { width: 100%; margin-top: .35rem; padding: .85rem .9rem; border: 1px solid var(--line); border-radius: 10px; color: var(--ink); font: inherit; background: #fff; }
+    textarea { min-height: 125px; resize: vertical; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    footer { padding: 2rem 0 6rem; background: #f7faf8; border-top: 1px solid var(--line); }
+    .footer-inner { display: flex; justify-content: space-between; gap: 1rem; align-items: start; }
+    .footer-inner p { color: var(--muted); font-size: .85rem; }
+    .whatsapp-float { position: fixed; right: 1.15rem; bottom: 1.15rem; z-index: 8; display: inline-flex; align-items: center; gap: .5rem; padding: .82rem 1rem; border-radius: 999px; background: #1ca56f; color: #fff; text-decoration: none; font-weight: 900; box-shadow: 0 12px 28px rgba(28,165,111,.32); }
+
+    @media (max-width: 820px) {
+      .topbar-inner { justify-content: center; text-align: center; }
+      .topbar-inner span { display: none; }
+      .nav-toggle { display: block; }
+      nav { position: absolute; inset: 74px 1rem auto; display: none; padding: 1rem; border: 1px solid var(--line); border-radius: 14px; background: var(--white); box-shadow: var(--shadow); }
+      nav.open { display: block; }
+      nav ul { flex-direction: column; align-items: stretch; gap: 0; }
+      nav a { display: block; padding: .8rem; }
+      .hero-grid, .band-grid, .contact-grid { grid-template-columns: 1fr; }
+      .hero { padding-top: 4rem; }
+      .hero-visual { min-height: 330px; }
+      .feature-grid { grid-template-columns: 1fr; }
+      .feature { min-height: auto; }
+      section { padding: 4.5rem 0; }
+    }
+    @media (max-width: 520px) {
+      .container { width: min(calc(100% - 1.25rem), var(--max)); }
+      .brand { font-size: 1rem; }
+      .brand-mark { width: 36px; height: 36px; }
+      .actions, .actions .button { width: 100%; }
+      .form-row { grid-template-columns: 1fr; gap: 1rem; }
+      .footer-inner { flex-direction: column; }
+      .whatsapp-float { right: .75rem; bottom: .75rem; }
+    }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; } }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+
+  <div class="topbar">
+    <div class="container topbar-inner">
+      <span>Prévia conceitual — conteúdo sujeito à confirmação da empresa</span>
+      <a href="https://wa.me/553130237668" target="_blank" rel="noopener noreferrer">Fale pelo WhatsApp</a>
+    </div>
+  </div>
+
+  <header>
+    <div class="container nav-wrap">
+      <a class="brand" href="#inicio" aria-label="Depósito Liberdade — início">
+        <span class="brand-mark" aria-hidden="true">DL</span>
+        <span>Depósito Liberdade</span>
+      </a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="menu" aria-label="Abrir menu">☰</button>
+      <nav id="menu" aria-label="Navegação principal">
+        <ul>
+          <li><a href="#sobre">Sobre</a></li>
+          <li><a href="#atendimento">Atendimento</a></li>
+          <li><a href="#contato">Contato</a></li>
+          <li><a class="button button-small button-secondary" href="https://wa.me/553130237668" target="_blank" rel="noopener noreferrer">Chamar no WhatsApp</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="conteudo">
+    <section class="hero" id="inicio">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <p class="eyebrow">Materiais de construção · Bairro Liberdade</p>
+          <h1>O apoio que sua obra precisa, perto de você.</h1>
+          <p>O Depósito Liberdade é um comércio local de materiais de construção em Santa Luzia - MG. Consulte disponibilidade, condições de atendimento e possibilidade de entrega.</p>
+          <div class="actions">
+            <a class="button button-primary" href="https://wa.me/553130237668?text=Ol%C3%A1%2C%20gostaria%20de%20saber%20mais%20sobre%20os%20materiais%20de%20constru%C3%A7%C3%A3o." target="_blank" rel="noopener noreferrer">Solicitar atendimento</a>
+            <a class="button button-ghost" href="#contato">Ver contato e localização</a>
+          </div>
+          <p class="note" style="margin-top:1rem">Esta é uma apresentação conceitual. Imagens, textos e informações comerciais devem ser validados antes da publicação.</p>
+        </div>
+        <div class="hero-visual" aria-label="Espaço reservado para foto real da loja">
+          <div class="visual-card"><div class="store-shape" aria-hidden="true"></div></div>
+          <div class="floating-card">
+            <div class="rating" aria-label="Nota informada: 4,2 de 5">★ 4,2</div>
+            <p class="note">Nota informada em perfil de referência. Confirme antes de publicar.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="sobre">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow">Uma presença local</p>
+          <h2>Clareza para encontrar o que você procura.</h2>
+          <p>Uma página objetiva para apresentar o negócio, facilitar o contato e orientar o cliente até o atendimento — sem prometer informações que ainda não foram confirmadas.</p>
+        </div>
+        <div class="feature-grid">
+          <article class="feature">
+            <div class="icon" aria-hidden="true">⌂</div>
+            <h3>No bairro Liberdade</h3>
+            <p>Comércio local com referência de endereço em Santa Luzia - MG.</p>
+          </article>
+          <article class="feature">
+            <div class="icon" aria-hidden="true">▦</div>
+            <h3>Materiais de construção</h3>
+            <p>Consulte diretamente a disponibilidade dos itens para a sua necessidade.</p>
+          </article>
+          <article class="feature">
+            <div class="icon" aria-hidden="true">↗</div>
+            <h3>Contato direto</h3>
+            <p>Fale pelo WhatsApp ou telefone para tirar dúvidas antes de se deslocar.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="band" id="atendimento">
+      <div class="container band-grid">
+        <div>
+          <p class="eyebrow">Atendimento</p>
+          <h2>Vamos conversar sobre sua necessidade?</h2>
+          <p style="margin-top:1rem">Envie uma mensagem com o que você procura. A equipe poderá confirmar disponibilidade, valores e condições diretamente com você.</p>
+          <div class="actions">
+            <a class="button button-primary" href="https://wa.me/553130237668" target="_blank" rel="noopener noreferrer">Abrir WhatsApp</a>
+            <a class="button button-ghost" href="tel:+553130237668">Ligar agora</a>
+          </div>
+        </div>
+        <div>
+          <ul class="info-list">
+            <li><span aria-hidden="true">✓</span><span><strong>Resposta pelo canal direto</strong><br />Use o WhatsApp para enviar sua dúvida.</span></li>
+            <li><span aria-hidden="true">✓</span><span><strong>Informações confirmadas na conversa</strong><br />Preços, estoque e entrega devem ser consultados.</span></li>
+            <li><span aria-hidden="true">✓</span><span><strong>Sem compromisso com dados não validados</strong><br />A prévia não substitui a confirmação oficial.</span></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="contato">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow">Contato e localização</p>
+          <h2>Fale com o Depósito Liberdade.</h2>
+          <p>Escolha o canal mais conveniente. Para uma experiência completa, confirme os dados abaixo antes da publicação definitiva.</p>
+        </div>
+        <div class="contact-grid">
+          <aside class="contact-card">
+            <h3>Informações de referência</h3>
+            <div class="contact-item">
+              <strong>Telefone / WhatsApp</strong>
+              <a href="tel:+553130237668">(31) 3023-7668</a>
+            </div>
+            <div class="contact-item">
+              <strong>Endereço informado</strong>
+              <p>R. Maria do Rosário Pimenta Machado, 226<br />Liberdade, Santa Luzia - MG<br />CEP 33170-818</p>
+            </div>
+            <div class="contact-item">
+              <strong>Entrega</strong>
+              <p>Informação indicada no perfil de referência. Consulte área, disponibilidade e condições.</p>
+            </div>
+            <p class="note">Os dados desta seção foram organizados a partir das informações fornecidas para a prévia e precisam de validação do negócio.</p>
+          </aside>
+          <div class="form-card">
+            <h3>Envie uma mensagem rápida</h3>
+            <p class="muted" style="margin-top:.5rem">O formulário abre uma conversa no WhatsApp. Nenhum dado é enviado para este site.</p>
+            <form id="whatsappForm">
+              <div class="form-row">
+                <label>Seu nome
+                  <input id="nome" name="nome" type="text" autocomplete="name" placeholder="Como podemos chamar você?" required />
+                </label>
+                <label>Assunto
+                  <input id="assunto" name="assunto" type="text" placeholder="Ex.: material para reforma" required />
+                </label>
+              </div>
+              <label>Mensagem
+                <textarea id="mensagem" name="mensagem" placeholder="Conte brevemente o que você precisa..." required></textarea>
+              </label>
+              <button class="button button-secondary" type="submit">Continuar pelo WhatsApp</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-inner">
+      <div>
+        <a class="brand" href="#inicio"><span class="brand-mark" aria-hidden="true">DL</span><span>Depósito Liberdade</span></a>
+        <p style="margin-top:.75rem">Prévia conceitual de site institucional.</p>
+      </div>
+      <p>© <span id="year"></span> Depósito Liberdade. Informações sujeitas à confirmação.</p>
+    </div>
+  </footer>
+
+  <a class="whatsapp-float" href="https://wa.me/553130237668" target="_blank" rel="noopener noreferrer" aria-label="Falar com o Depósito Liberdade pelo WhatsApp">◉ WhatsApp</a>
+
+  <script>
+    (function () {
+      const toggle = document.querySelector('.nav-toggle');
+      const nav = document.querySelector('#menu');
+      if (toggle && nav) {
+        toggle.addEventListener('click', function () {
+          const isOpen = nav.classList.toggle('open');
+          toggle.setAttribute('aria-expanded', String(isOpen));
+          toggle.setAttribute('aria-label', isOpen ? 'Fechar menu' : 'Abrir menu');
+        });
+        nav.querySelectorAll('a').forEach(function (link) {
+          link.addEventListener('click', function () {
+            nav.classList.remove('open');
+            toggle.setAttribute('aria-expanded', 'false');
+            toggle.setAttribute('aria-label', 'Abrir menu');
+          });
+        });
+      }
+
+      const form = document.querySelector('#whatsappForm');
+      if (form) {
+        form.addEventListener('submit', function (event) {
+          event.preventDefault();
+          const nome = document.querySelector('#nome').value.trim();
+          const assunto = document.querySelector('#assunto').value.trim();
+          const mensagem = document.querySelector('#mensagem').value.trim();
+          const text = `Olá, sou ${nome}. Gostaria de falar sobre: ${assunto}. ${mensagem}`;
+          window.open(`https://wa.me/553130237668?text=${encodeURIComponent(text)}`, '_blank', 'noopener,noreferrer');
+        });
+      }
+
+      document.querySelector('#year').textContent = new Date().getFullYear();
+    }());
+  </script>
+</body>
+</html>
