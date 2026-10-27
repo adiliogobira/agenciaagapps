@@ -50,7 +50,7 @@ function buildMessage(array $d): string {
     $positive = $praise ? "\nPelo que observei, os clientes destacam {$praise}." : '';
     $gap = $opportunity ? "\nIdentifiquei uma oportunidade de melhorar a apresentação digital: {$opportunity}." :
         "\nAcredito que uma apresentação digital mais organizada pode facilitar o contato de novos clientes.";
-    return "Olá, tudo bem?\n\nMeu nome é [SEU NOME], sou da AG Apps Soluções. Trabalho com criação de sites, catálogos online e presença digital para empresas.\n\nEncontrei a {$name}, do segmento de {$segment}, durante uma pesquisa de negócios locais." .
+    return "Olá, tudo bem?\n\nMeu nome é Adilio, sou da AG Apps Soluções. Trabalho com criação de sites, catálogos online e presença digital para empresas.\n\nEncontrei a {$name}, do segmento de {$segment}, durante uma pesquisa de negócios locais." .
         $context . $reputation . $positive . $gap .
         "\n\nPosso preparar uma prévia visual, sem compromisso, mostrando como um site profissional poderia apresentar melhor os serviços, localização, diferenciais e formas de contato de vocês.\n\nSe fizer sentido, posso te mostrar a ideia?\n\nwww.agapps.com.br";
 }
@@ -162,7 +162,7 @@ $(function(){
 });
 </script>
 </body></html>
-
+<?php /*
 '''
 
 (base/"index.php").write_text(index_php, encoding="utf-8")
@@ -189,3 +189,4 @@ readme = """# AG Apps — Prospecção Inteligente
 - Evite disparos em massa. Faça contato individual, relevante e respeite pedidos para não receber novas mensagens.
 - Não publique avaliações ou dados pessoais sem verificar permissões e necessidade.
 - Para produção, considere proteção CSRF, limite de tamanho do texto, autenticação e registro mínimo de consentimento/contato.
+*/ ?>
