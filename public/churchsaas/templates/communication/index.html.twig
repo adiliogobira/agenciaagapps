@@ -1,0 +1,41 @@
+{% extends 'layout/base.html.twig' %}
+{% block title %}Comunicação{% endblock %}
+{% block body %}
+<h4 class="mb-3"><i class="bi bi-megaphone text-primary"></i> Comunicação</h4>
+
+<div class="row g-3">
+  <div class="col-lg-5">
+    <div class="card p-4">
+      <h6 class="mb-3">Novo comunicado</h6>
+      {{ form_start(form) }}
+      {{ form_row(form.title) }}
+      {{ form_row(form.body) }}
+      <div class="row g-2">
+        <div class="col-6">{{ form_row(form.channel) }}</div>
+        <div class="col-6">{{ form_row(form.audience) }}</div>
+      </div>
+      <button class="btn btn-primary w-100 mt-2"><i class="bi bi-send"></i> Enviar</button>
+      {{ form_end(form) }}
+      <small class="text-muted d-block mt-2">E-mail e WhatsApp usam a integração configurada no <code>.env</code>.</small>
+    </div>
+  </div>
+  <div class="col-lg-7">
+    <div class="card p-3">
+      <h6 class="mb-3">Comunicados recentes</h6>
+      {% for a in announcements %}
+        <div class="border-bottom py-2">
+          <div class="d-flex justify-content-between align-items-start gap-2">
+            <strong>{{ a.title }}</strong>
+            <span class="badge bg-{{ a.channel=='mural'?'primary':(a.channel=='email'?'info':'success') }}-subtle text-{{ a.channel=='mural'?'primary':(a.channel=='email'?'info':'success') }}">{{ a.channelLabel }}</span>
+          </div>
+          <div class="small text-muted">{{ a.body }}</div>
+          <small class="text-muted"><i class="bi bi-people"></i> {{ a.audienceLabel }} · {{ a.createdAt|date('d/m/Y H:i') }}
+            {%- if a.sentAt %} · <span class="text-success">enviado</span>{% else %} · <span class="text-warning">pendente</span>{% endif %}</small>
+        </div>
+      {% else %}
+        <p class="text-muted mb-0">Nenhum comunicado enviado.</p>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,43 @@
+{% extends 'layout/base.html.twig' %}
+{% block title %}Membros{% endblock %}
+{% block body %}
+<div class="page-head">
+  <h4 class="page-title"><span class="ico"><i class="bi bi-people"></i></span> Membros</h4>
+  <a href="{{ path('member_new') }}" class="btn btn-primary"><i class="bi bi-plus-lg"></i> Novo membro</a>
+</div>
+
+<form class="row g-2 mb-3">
+  <div class="col-md-6"><input name="q" value="{{ q }}" class="form-control" placeholder="Buscar por nome, CPF ou e-mail..."></div>
+  <div class="col-md-3">
+    <select name="status" class="form-select">
+      <option value="">Todas as situações</option>
+      <option value="ativo" {{ status=='ativo'?'selected' }}>Ativos</option>
+      <option value="inativo" {{ status=='inativo'?'selected' }}>Inativos</option>
+      <option value="disciplina" {{ status=='disciplina'?'selected' }}>Em disciplina</option>
+    </select>
+  </div>
+  <div class="col-md-3"><button class="btn btn-outline-primary w-100">Filtrar</button></div>
+</form>
+
+<div class="card">
+  <div class="table-responsive">
+  <table class="table table-hover align-middle mb-0">
+    <thead class="table-light"><tr><th>Nome</th><th>Função</th><th>Ministério</th><th>Telefone</th><th>Situação</th><th></th></tr></thead>
+    <tbody>
+    {% for m in members %}
+      <tr>
+        <td><a href="{{ path('member_show', {id:m.id}) }}" class="text-decoration-none fw-medium">{{ m.fullName }}</a></td>
+        <td class="text-capitalize">{{ m.churchRole }}</td>
+        <td>{{ m.ministries is not empty ? m.ministries|join(', ') : '—' }}</td>
+        <td>{{ m.phone ?? '—' }}</td>
+        <td><span class="badge bg-{{ m.status=='ativo'?'success':(m.status=='inativo'?'secondary':'warning') }}">{{ m.status }}</span></td>
+        <td class="text-end"><a href="{{ path('member_edit', {id:m.id}) }}" class="btn btn-sm btn-outline-secondary"><i class="bi bi-pencil"></i></a></td>
+      </tr>
+    {% else %}
+      <tr><td colspan="6" class="text-center text-muted py-4">Nenhum membro encontrado.</td></tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  </div>
+</div>
+{% endblock %}

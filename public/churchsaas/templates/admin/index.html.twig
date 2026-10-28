@@ -1,0 +1,52 @@
+{% extends 'layout/base.html.twig' %}
+{% block title %}Administração{% endblock %}
+{% block body %}
+<div class="page-head">
+  <h4 class="page-title"><span class="ico"><i class="bi bi-gear"></i></span> Administração</h4>
+  <div class="d-flex gap-2">
+    <a href="{{ path('admin_church') }}" class="btn btn-outline-primary"><i class="bi bi-buildings"></i> Dados da igreja</a>
+    <a href="{{ path('admin_user_new') }}" class="btn btn-primary"><i class="bi bi-person-plus"></i> Novo usuário</a>
+  </div>
+</div>
+
+<div class="card mb-3 p-3">
+  <div class="row">
+    <div class="col-md-4"><small class="text-muted d-block">Igreja</small><strong>{{ church.name }}</strong></div>
+    <div class="col-md-4"><small class="text-muted d-block">E-mail</small>{{ church.email ?? '—' }}</div>
+    <div class="col-md-4"><small class="text-muted d-block">Telefone</small>{{ church.phone ?? '—' }}</div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="table-responsive">
+    <table class="table align-middle mb-0">
+      <thead class="table-light"><tr><th>Nome</th><th>E-mail</th><th>Perfis</th><th>Situação</th><th></th></tr></thead>
+      <tbody>
+      {% for u in users %}
+        <tr>
+          <td>{{ u.fullName }}</td>
+          <td>{{ u.email }}</td>
+          <td>
+            {% for r in u.roles %}
+              {% if r != 'ROLE_USER' %}<span class="badge bg-secondary-subtle text-secondary-emphasis">{{ r|replace({'ROLE_':''})|lower }}</span>{% endif %}
+            {% endfor %}
+          </td>
+          <td><span class="badge bg-{{ u.active ? 'success' : 'secondary' }}">{{ u.active ? 'ativo' : 'inativo' }}</span></td>
+          <td class="text-end">
+            <div class="d-inline-flex gap-1">
+              <a href="{{ path('admin_user_edit', {id:u.id}) }}" class="btn btn-sm btn-outline-secondary"><i class="bi bi-pencil"></i></a>
+              <form method="post" action="{{ path('admin_user_toggle', {id:u.id}) }}">
+                <input type="hidden" name="_token" value="{{ csrf_token('toggle' ~ u.id) }}">
+                <button class="btn btn-sm btn-outline-{{ u.active ? 'warning' : 'success' }}" title="{{ u.active ? 'Desativar' : 'Ativar' }}">
+                  <i class="bi bi-{{ u.active ? 'pause' : 'play' }}"></i>
+                </button>
+              </form>
+            </div>
+          </td>
+        </tr>
+      {% else %}<tr><td colspan="5" class="text-center text-muted py-3">Nenhum usuário.</td></tr>{% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

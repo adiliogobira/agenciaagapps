@@ -1,0 +1,65 @@
+{% extends 'layout/base.html.twig' %}
+{% block title %}Pastoral{% endblock %}
+{% block body %}
+<div class="page-head">
+  <h4 class="page-title"><span class="ico"><i class="bi bi-book"></i></span> Pastoral</h4>
+  <div class="d-flex gap-2">
+    <a href="{{ path('pastoral_appointment_new') }}" class="btn btn-primary"><i class="bi bi-calendar-plus"></i> Novo agendamento</a>
+    <a href="{{ path('pastoral_prayer_new') }}" class="btn btn-outline-primary"><i class="bi bi-heart"></i> Pedido de oração</a>
+  </div>
+</div>
+
+<div class="row g-3">
+  <div class="col-lg-7">
+    <div class="card p-3">
+      <h6 class="mb-3">Agenda pastoral</h6>
+      <div class="table-responsive">
+        <table class="table align-middle mb-0">
+          <thead class="table-light"><tr><th>Quando</th><th>Tipo</th><th>Membro</th><th>Situação</th><th></th></tr></thead>
+          <tbody>
+          {% for a in appointments %}
+            <tr>
+              <td>{{ a.scheduledAt|date('d/m/Y H:i') }}</td>
+              <td>{{ types[a.type] ?? a.type }}</td>
+              <td>{{ a.member ?? '—' }}{% if a.subject %}<br><small class="text-muted">{{ a.subject }}</small>{% endif %}</td>
+              <td><span class="badge bg-{{ a.status=='realizado'?'success':(a.status=='cancelado'?'secondary':'info') }}">{{ a.status }}</span></td>
+              <td class="text-end">
+                <div class="btn-group btn-group-sm">
+                  {% for st, ic in {'realizado':'check2-circle','cancelado':'x-circle'} %}
+                  <form method="post" action="{{ path('pastoral_appointment_status', {id:a.id, status:st}) }}">
+                    <input type="hidden" name="_token" value="{{ csrf_token('status' ~ a.id) }}">
+                    <button class="btn btn-outline-secondary btn-sm" title="{{ st }}"><i class="bi bi-{{ ic }}"></i></button>
+                  </form>
+                  {% endfor %}
+                </div>
+              </td>
+            </tr>
+          {% else %}<tr><td colspan="5" class="text-center text-muted py-3">Nenhum agendamento.</td></tr>{% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-5">
+    <div class="card p-3">
+      <h6 class="mb-3">Pedidos de oração</h6>
+      {% for p in prayers %}
+        <div class="border-bottom py-2 d-flex justify-content-between align-items-start gap-2">
+          <div>
+            <div class="fw-medium">{{ p.confidential ? 'Confidencial' : p.requesterName }}</div>
+            <small class="text-muted">{{ p.confidential ? '🔒 pedido reservado' : p.request }}</small>
+          </div>
+          <form method="post" action="{{ path('pastoral_prayer_answered', {id:p.id}) }}">
+            <input type="hidden" name="_token" value="{{ csrf_token('answered' ~ p.id) }}">
+            <button class="btn btn-sm {{ p.answered ? 'btn-success' : 'btn-outline-success' }}" title="Respondido">
+              <i class="bi bi-check-lg"></i>
+            </button>
+          </form>
+        </div>
+      {% else %}
+        <p class="text-muted mb-0">Nenhum pedido registrado.</p>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+{% endblock %}

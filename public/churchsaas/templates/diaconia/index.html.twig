@@ -1,0 +1,69 @@
+{% extends 'layout/base.html.twig' %}
+{% block title %}Diaconia{% endblock %}
+{% block body %}
+<div class="page-head">
+  <h4 class="page-title"><span class="ico"><i class="bi bi-hand-thumbs-up"></i></span> Escalas da Diaconia</h4>
+  <div class="d-flex flex-wrap gap-2">
+    <a href="{{ path('diaconia_my') }}" class="btn btn-outline-primary btn-sm"><i class="bi bi-person-check"></i> Minhas escalas</a>
+    {% if canManage %}
+      <a href="{{ path('diaconia_new') }}" class="btn btn-primary btn-sm"><i class="bi bi-plus-lg"></i> Nova escala</a>
+    {% endif %}
+  </div>
+</div>
+
+<p class="text-muted small mb-3">
+  <i class="bi bi-info-circle"></i> As escalas são públicas para o diaconato: clique em
+  <strong>Ver escalados</strong> para saber quem já se marcou, qual serviço cada um vai exercer e marcar-se você também.
+</p>
+
+<div class="d-flex flex-wrap gap-1 mb-3">
+  <a href="{{ path('diaconia_index') }}" class="chip {{ type is null ? 'active' : '' }}">Todas</a>
+  {# {% for key, label in types %}
+    <a href="{{ path('diaconia_index', {type:key}) }}" class="chip {{ type==key ? 'active' : '' }}">{{ label }}</a>
+  {% endfor %} #}
+</div>
+
+<div class="row g-3">
+{% for s in schedules %}
+  {% set escalados = s.countFilledSlots %}
+  {% set abertas = s.countOpenSlots %}
+  {% set souEu = me ? (s.slots.toArray|filter(sl => sl.isFilled and sl.deacon and sl.deacon.id == me.id)|length > 0) : false %}
+
+  <div class="col-md-6 col-xl-4">
+    <div class="card card-hover p-3 h-100 d-flex flex-column">
+      <div class="d-flex justify-content-between align-items-start">
+        <span class="badge bg-primary-subtle text-primary">{{ s.typeLabel }}</span>
+        <small class="text-muted">{{ s.scheduledAt|date('d/m/Y H:i') }}</small>
+      </div>
+
+      <h6 class="mt-2 mb-1">{{ s.title }}</h6>
+      {% if s.location %}<small class="text-muted"><i class="bi bi-geo-alt"></i> {{ s.location }}</small>{% endif %}
+
+      <div class="mt-3 d-flex flex-wrap gap-1">
+        <span class="badge bg-success-subtle text-success"><i class="bi bi-people-fill"></i> {{ escalados }} escalado(s)</span>
+        {% if abertas %}<span class="badge bg-warning-subtle text-warning-emphasis"><i class="bi bi-hourglass-split"></i> {{ abertas }} vaga(s)</span>{% endif %}
+        {% if souEu %}<span class="badge bg-primary"><i class="bi bi-check-circle"></i> você está</span>{% endif %}
+      </div>
+
+      <div class="mt-auto pt-3 d-flex gap-2">
+        <button class="btn btn-sm btn-success flex-fill" data-bs-toggle="modal" data-bs-target="#roster{{ s.id }}">
+          <i class="bi bi-people"></i> Ver escalados
+        </button>
+        {% if canManage %}
+          <a href="{{ path('diaconia_show', {id:s.id}) }}" class="btn btn-sm btn-outline-primary">
+            <i class="bi bi-gear"></i>
+          </a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+{% else %}
+  <div class="col-12"><div class="card p-4 text-center text-muted">Nenhuma escala futura.{% if canManage %} Crie a primeira.{% endif %}</div></div>
+{% endfor %}
+</div>
+
+{# Modais de cada escala (quem já se marcou + marcar-se) #}
+{% for s in schedules %}
+  {{ include('diaconia/_roster_modal.html.twig', {schedule: s, me: me, activities: activities}) }}
+{% endfor %}
+{% endblock %}

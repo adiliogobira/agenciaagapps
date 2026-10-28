@@ -1,0 +1,129 @@
+{% extends 'layout/base.html.twig' %}
+{% block title %}Relatórios{% endblock %}
+{% block body %}
+<div class="page-head">
+  <h4 class="page-title"><span class="ico"><i class="bi bi-graph-up"></i></span> Relatórios — {{ year }}</h4>
+  <div class="d-flex gap-1">
+    {% for y in [year - 2, year - 1, year] %}
+      <a href="{{ path('report_index', {year: y}) }}" class="chip {{ y == year ? 'active' : '' }}">{{ y }}</a>
+    {% endfor %}
+  </div>
+</div>
+
+<div class="row g-3 mb-3">
+  <div class="col-6 col-lg-3"><div class="card stat-card p-3"><small>Membros</small><div class="display-6">{{ membersTotal }}</div></div></div>
+  <div class="col-6 col-lg-3"><div class="card stat-card p-3"><small>Saldo do ano</small><div class="display-6 {{ balance>=0?'text-success':'text-danger' }}">R$ {{ balance|number_format(0,',','.') }}</div></div></div>
+  <div class="col-6 col-lg-3"><div class="card stat-card p-3"><small>Escalas</small><div class="display-6">{{ schedulesCount }}</div></div></div>
+  <div class="col-6 col-lg-3"><div class="card stat-card p-3"><small>Eventos</small><div class="display-6">{{ eventsCount }}</div></div></div>
+</div>
+
+<div class="row g-3">
+  {# ---- Linha 1: membros (pizza) + fluxo de caixa (barras) ---- #}
+  <div class="col-lg-4">
+    <div class="card p-3 h-100">
+      <h6 class="mb-1">Membros por situação</h6>
+      <p class="text-muted small mb-3">Composição do rol</p>
+      <div style="height:270px"><canvas id="statusChart"></canvas></div>
+    </div>
+  </div>
+  <div class="col-lg-8">
+    <div class="card p-3 h-100">
+      <h6 class="mb-1">Fluxo de caixa mensal</h6>
+      <p class="text-muted small mb-3">Entradas e saídas em {{ year }}</p>
+      <div style="height:270px"><canvas id="cashChart"></canvas></div>
+    </div>
+  </div>
+
+  {# ---- Linha 2: entradas (pizza) + escalas por tipo (barras H) ---- #}
+  <div class="col-lg-4">
+    <div class="card p-3 h-100">
+      <h6 class="mb-1">Origem das entradas</h6>
+      <p class="text-muted small mb-3">Dízimos, ofertas e campanhas</p>
+      <div style="height:260px"><canvas id="kindsChart"></canvas></div>
+    </div>
+  </div>
+  <div class="col-lg-8">
+    <div class="card p-3 h-100">
+      <h6 class="mb-1">Escalas por tipo de serviço</h6>
+      <p class="text-muted small mb-3">Total de escalas registradas</p>
+      <div style="height:260px"><canvas id="schedChart"></canvas></div>
+    </div>
+  </div>
+
+  {# ---- Linha 3: diaconia (pizza) + resumo financeiro ---- #}
+  <div class="col-lg-4">
+    <div class="card p-3 h-100">
+      <h6 class="mb-1">Vagas de serviço</h6>
+      <p class="text-muted small mb-3">Situação das vagas da diaconia</p>
+      <div style="height:250px"><canvas id="slotsChart"></canvas></div>
+    </div>
+  </div>
+  <div class="col-lg-8">
+    <div class="card p-3 h-100">
+      <h6 class="mb-1">Resumo financeiro do ano</h6>
+      <p class="text-muted small mb-3">Comparativo consolidado</p>
+      <div style="height:250px"><canvas id="summaryChart"></canvas></div>
+      <div class="row text-center mt-3 pt-3 border-top">
+        <div class="col"><small class="text-muted d-block">Dízimos</small><strong>R$ {{ tithes|number_format(0,',','.') }}</strong></div>
+        <div class="col"><small class="text-muted d-block">Ofertas</small><strong>R$ {{ offerings|number_format(0,',','.') }}</strong></div>
+        <div class="col"><small class="text-muted d-block">Entradas</small><strong class="text-success">R$ {{ income|number_format(0,',','.') }}</strong></div>
+        <div class="col"><small class="text-muted d-block">Saídas</small><strong class="text-danger">R$ {{ expense|number_format(0,',','.') }}</strong></div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+<script>
+  var NOMES = { dizimo:'Dízimos', oferta:'Ofertas', campanha:'Campanhas', despesa:'Despesas', outro:'Outros' };
+
+  // ----- Pizza (rosca): membros por situação -----
+  (function () {
+    var bs = {{ byStatus|json_encode|raw }};
+    AppCharts.doughnut('statusChart',
+      ['Ativos', 'Inativos', 'Disciplina', 'Transferidos'],
+      [bs.ativo, bs.inativo, bs.disciplina, bs.transferido],
+      { centerLabel: 'Membros', emptyText: 'Sem membros cadastrados' }
+    );
+  })();
+
+  // ----- Barras: fluxo de caixa mensal -----
+  (function () {
+    var cf = {{ cashFlow|json_encode|raw }};
+    var meses = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
+    AppCharts.bar('cashChart', meses, [
+      { label:'Entradas', data:Object.values(cf).map(function(x){ return x.entrada; }), color:'#10b981' },
+      { label:'Saídas',   data:Object.values(cf).map(function(x){ return x.saida; }),   color:'#ef4444' }
+    ], { money:true });
+  })();
+
+  // ----- Pizza: origem das entradas -----
+  (function () {
+    var k = {{ kindsIn|json_encode|raw }};
+    var labels = [], data = [];
+    Object.keys(k).forEach(function (key) { labels.push(NOMES[key] || key); data.push(k[key]); });
+    AppCharts.pie('kindsChart', labels, data, { money:true, emptyText:'Sem entradas em {{ year }}' });
+  })();
+
+  // ----- Barras horizontais: escalas por tipo -----
+  (function () {
+    var st = {{ schedulesByType|json_encode|raw }};
+    AppCharts.barH('schedChart', Object.keys(st), Object.values(st), { emptyText:'Nenhuma escala registrada' });
+  })();
+
+  // ----- Pizza: vagas preenchidas x abertas -----
+  AppCharts.doughnut('slotsChart',
+    ['Preenchidas', 'Abertas'],
+    [{{ slotsFilled }}, {{ slotsOpen }}],
+    { centerLabel:'Vagas', emptyText:'Nenhuma vaga criada' }
+  );
+
+  // ----- Barras: resumo financeiro -----
+  AppCharts.bar('summaryChart',
+    ['Dízimos', 'Ofertas', 'Total entradas', 'Total saídas'],
+    [{ label:'Valor', data:[{{ tithes }}, {{ offerings }}, {{ income }}, {{ expense }}], color:'#6366f1' }],
+    { money:true, thickness:60, emptyText:'Sem movimentação em {{ year }}' }
+  );
+</script>
+{% endblock %}

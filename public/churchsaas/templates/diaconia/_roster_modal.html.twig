@@ -1,0 +1,127 @@
+{#
+Modal público da escala — mostra quem já se marcou, qual serviço cada um vai
+exercer, as vagas ainda em aberto e o formulário para o diácono logado se marcar.
+Parâmetros:
+schedule   — a escala (Schedule)
+me         — o diácono logado (Deacon|null)
+activities — ServiceSlot::ACTIVITIES
+#}
+{% set filled = schedule.slots.toArray|filter(sl => sl.isFilled) %}
+{% set open = schedule.slots.toArray|filter(sl => sl.isOpen) %}
+{% set jaEstou = me ? (schedule.slots.toArray|filter(sl => sl.isFilled and sl.deacon and sl.deacon.id == me.id)|length > 0) : false %}
+<div class="modal fade" id="roster{{ schedule.id }}" tabindex="-1" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<div>
+					<h5 class="modal-title mb-0">{{ schedule.title }}</h5>
+					<small class="text-muted">
+					<span class="badge bg-primary-subtle text-primary">{{ schedule.typeLabel }}</span>
+					<i class="bi bi-calendar-event ms-1"></i> {{ schedule.scheduledAt|date('d/m/Y H:i') }}
+					{% if schedule.location %}<i class="bi bi-geo-alt ms-2"></i> {{ schedule.location }}{% endif %}
+					</small>
+				</div>
+				<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+			</div>
+			<div class="modal-body">
+				{# ---------- Quem já se marcou ---------- #}
+				<div class="d-flex justify-content-between align-items-center mb-2">
+					<h6 class="mb-0"><i class="bi bi-people-fill text-primary"></i> Escalados</h6>
+					<span class="badge bg-success-subtle text-success">{{ filled|length }} confirmado(s)</span>
+				</div>
+				{% if filled|length %}
+					<div class="list-group mb-4">
+						{% for slot in filled %}
+							<div class="list-group-item d-flex justify-content-between align-items-center gap-2
+								{{ me and slot.deacon and slot.deacon.id == me.id ? 'bg-primary-subtle' : '' }}">
+								<div class="d-flex align-items-center gap-2">
+									<span class="d-grid place-items-center rounded-circle bg-primary text-white fw-bold"
+										style="width:34px;height:34px;display:grid;place-items:center;font-size:.8rem">
+										{{ slot.deacon ? slot.deacon.name|slice(0,1)|upper : '?' }}
+									</span>
+									<div>
+										<div class="fw-semibold">
+											{{ slot.deacon ? slot.deacon.name : '—' }}
+											{% if me and slot.deacon and slot.deacon.id == me.id %}
+												<span class="badge bg-primary ms-1">você</span>
+											{% endif %}
+										</div>
+										{% if slot.acceptedAt %}
+											<small class="text-muted">marcou-se em {{ slot.acceptedAt|date('d/m/Y H:i') }}</small>
+										{% endif %}
+									</div>
+								</div>
+								<div class="text-end">
+									<span class="badge bg-success"><i class="bi bi-clipboard-check"></i> {{ slot.activityLabel }}</span>
+									{% if slot.notes %}<div><small class="text-muted">{{ slot.notes }}</small></div>{% endif %}
+								</div>
+							</div>
+						{% endfor %}
+					</div>
+				{% else %}
+					<p class="text-muted small mb-4">Ninguém se marcou nesta escala ainda. Seja o primeiro!</p>
+				{% endif %}
+				{# ---------- Vagas em aberto ---------- #}
+				{% if open|length %}
+					<div class="d-flex justify-content-between align-items-center mb-2">
+						<h6 class="mb-0"><i class="bi bi-hourglass-split text-warning"></i> Vagas em aberto</h6>
+						<span class="badge bg-warning-subtle text-warning-emphasis">{{ open|length }} disponível(is)</span>
+					</div>
+					<div class="list-group mb-4">
+						{% for slot in open %}
+							<div class="list-group-item d-flex justify-content-between align-items-center gap-2">
+								<div>
+									<i class="bi bi-clipboard text-muted"></i>
+									<strong>{{ slot.activityLabel }}</strong>
+									{% if slot.notes %}<small class="text-muted">— {{ slot.notes }}</small>{% endif %}
+								</div>
+								{% if me %}
+									<form method="post" action="{{ path('diaconia_slot_accept', {id: slot.id}) }}">
+										<input type="hidden" name="_token" value="{{ csrf_token('slot_accept' ~ slot.id) }}">
+										<button class="btn btn-sm btn-success"><i class="bi bi-check-lg"></i> Assumir</button>
+									</form>
+								{% else %}
+									<span class="badge bg-secondary">aberta</span>
+								{% endif %}
+							</div>
+						{% endfor %}
+					</div>
+				{% endif %}
+				{# ---------- Marcar-me nesta escala ---------- #}
+				
+					<div class="border rounded-3 p-3 bg-light-subtle">
+						<h6 class="mb-1"><i class="bi bi-hand-thumbs-up text-success"></i> Marcar-me nesta escala</h6>
+						<p class="text-muted small mb-3">Escolha o serviço que você vai exercer.</p>
+						{% if jaEstou %}
+							<div class="alert alert-info py-2 small mb-3">
+								<i class="bi bi-info-circle"></i> Você já está escalado aqui. Pode se marcar em outro serviço, se quiser.
+							</div>
+						{% endif %}
+						<form method="post" action="{{ path('diaconia_volunteer', {id: schedule.id}) }}" class="row g-2 align-items-end">
+							<input type="hidden" name="_token" value="{{ csrf_token('volunteer' ~ schedule.id) }}">
+							<div class="col-12 col-sm-5">
+								<label class="form-label mb-1">Serviço</label>
+								<select name="activity" class="form-select form-select-sm" required>
+									{% for key, label in activities %}<option value="{{ key }}">{{ label }}</option>{% endfor %}
+								</select>
+							</div>
+							<div class="col-12 col-sm-4">
+								<label class="form-label mb-1">Detalhe (opcional)</label>
+								<input name="notes" class="form-control form-control-sm" placeholder="ex.: porta lateral">
+							</div>
+							<div class="col-12 col-sm-3">
+								<button class="btn btn-success btn-sm w-100"><i class="bi bi-check2-circle"></i> Confirmar</button>
+							</div>
+						</form>
+					</div>
+				
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Fechar</button>
+				<a href="{{ path('diaconia_show', {id: schedule.id}) }}" class="btn btn-outline-primary">
+					<i class="bi bi-box-arrow-up-right"></i> Abrir escala
+				</a>
+			</div>
+		</div>
+	</div>
+</div>

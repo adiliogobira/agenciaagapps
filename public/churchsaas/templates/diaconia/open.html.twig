@@ -1,0 +1,101 @@
+{% extends 'layout/base.html.twig' %}
+{% block title %}Vagas para servir{% endblock %}
+{% block body %}
+<div class="page-head">
+  <h4 class="page-title"><span class="ico"><i class="bi bi-hand-index-thumb"></i></span> Vagas para servir</h4>
+  <div class="d-flex gap-2">
+    <a href="{{ path('diaconia_index') }}" class="btn btn-outline-primary btn-sm"><i class="bi bi-grid"></i> Todas as escalas</a>
+    <a href="{{ path('diaconia_my') }}" class="btn btn-outline-primary btn-sm"><i class="bi bi-person-check"></i> Minhas escalas</a>
+  </div>
+</div>
+
+{% if not me %}
+  <div class="alert alert-warning">Seu usuário não está vinculado a um cadastro de diácono, então você pode visualizar mas não se marcar. Fale com a secretaria ou com o líder do diaconato.</div>
+{% endif %}
+
+{% for s in schedules %}
+  {% set escalados = s.countFilledSlots %}
+  {% set abertas = s.countOpenSlots %}
+  {% set souEu = me ? (s.slots.toArray|filter(sl => sl.isFilled and sl.deacon and sl.deacon.id == me.id)|length > 0) : false %}
+
+  <div class="card mb-3">
+    <div class="card-header d-flex flex-wrap justify-content-between align-items-center gap-2">
+      <div>
+        <span class="badge bg-primary-subtle text-primary">{{ s.typeLabel }}</span>
+        <strong class="ms-1">{{ s.title }}</strong>
+        <small class="text-muted ms-2"><i class="bi bi-calendar-event"></i> {{ s.scheduledAt|date('d/m/Y H:i') }}</small>
+        {% if s.location %}<small class="text-muted ms-2"><i class="bi bi-geo-alt"></i> {{ s.location }}</small>{% endif %}
+      </div>
+      <div class="d-flex align-items-center gap-2">
+        <span class="badge bg-success-subtle text-success">{{ escalados }} escalado(s)</span>
+        {% if abertas %}<span class="badge bg-warning-subtle text-warning-emphasis">{{ abertas }} vaga(s)</span>{% endif %}
+        {% if souEu %}<span class="badge bg-primary">você está</span>{% endif %}
+        <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#roster{{ s.id }}">
+          <i class="bi bi-people"></i> Ver escalados
+        </button>
+      </div>
+    </div>
+
+    {# ---- Vagas criadas pelo líder ---- #}
+    {% if s.slots|length %}
+      <ul class="list-group list-group-flush">
+        {% for slot in s.slots %}
+          <li class="list-group-item d-flex flex-wrap justify-content-between align-items-center gap-2">
+            <div>
+              <i class="bi bi-clipboard-check text-primary"></i>
+              <strong>{{ slot.activityLabel }}</strong>
+              {% if slot.notes %}<small class="text-muted">— {{ slot.notes }}</small>{% endif %}
+            </div>
+            <div>
+              {% if slot.isFilled %}
+                {% if me and slot.deacon and slot.deacon.id == me.id %}
+                  <span class="badge bg-primary"><i class="bi bi-person-check"></i> Você</span>
+                {% else %}
+                  <span class="badge bg-success"><i class="bi bi-person-fill"></i> {{ slot.deacon ? slot.deacon.name : '—' }}</span>
+                {% endif %}
+              {% else %}
+                {% if me %}
+                  <form method="post" action="{{ path('diaconia_slot_accept', {id:slot.id}) }}" class="d-inline">
+                    <input type="hidden" name="_token" value="{{ csrf_token('slot_accept' ~ slot.id) }}">
+                    <button class="btn btn-sm btn-success"><i class="bi bi-check-lg"></i> Assumir vaga</button>
+                  </form>
+                {% else %}
+                  <span class="badge bg-warning-subtle text-warning-emphasis">Vaga aberta</span>
+                {% endif %}
+              {% endif %}
+            </div>
+          </li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+
+    {# ---- Marcar-se escolhendo o serviço ---- #}
+    {% if me %}
+    <div class="card-footer bg-transparent border-top">
+      <form method="post" action="{{ path('diaconia_volunteer', {id:s.id}) }}" class="row g-2 align-items-end">
+        <input type="hidden" name="_token" value="{{ csrf_token('volunteer' ~ s.id) }}">
+        <div class="col-12 col-sm">
+          <label class="form-label mb-1"><i class="bi bi-plus-circle text-success"></i> Marcar-me nesta escala — escolha o serviço</label>
+          <select name="activity" class="form-select form-select-sm">
+            {% for key, label in activities %}<option value="{{ key }}">{{ label }}</option>{% endfor %}
+          </select>
+        </div>
+        <div class="col-8 col-sm-4">
+          <input name="notes" class="form-control form-control-sm" placeholder="Detalhe (opcional)">
+        </div>
+        <div class="col-4 col-sm-auto">
+          <button class="btn btn-success btn-sm w-100"><i class="bi bi-hand-thumbs-up"></i> Servir</button>
+        </div>
+      </form>
+    </div>
+    {% endif %}
+  </div>
+{% else %}
+  <div class="card p-4 text-center text-muted">Nenhuma escala futura no momento.</div>
+{% endfor %}
+
+{# Modais #}
+{% for s in schedules %}
+  {{ include('diaconia/_roster_modal.html.twig', {schedule: s, me: me, activities: activities}) }}
+{% endfor %}
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends 'layout/base.html.twig' %}
+{% block title %}Nova escala{% endblock %}
+{% block body %}
+<h4 class="mb-3">Nova escala de diaconia</h4>
+<div class="card p-4" style="max-width:640px">
+  {{ form_start(form) }}
+  <div class="row g-3">
+    <div class="col-md-6">{{ form_row(form.type) }}</div>
+    <div class="col-md-6">{{ form_row(form.scheduledAt) }}</div>
+    <div class="col-12">{{ form_row(form.title) }}</div>
+    <div class="col-12">{{ form_row(form.location) }}</div>
+    <div class="col-12">{{ form_row(form.notes) }}</div>
+  </div>
+  <div class="mt-4"><button class="btn btn-primary">Criar escala</button>
+    <a href="{{ path('diaconia_index') }}" class="btn btn-outline-secondary">Cancelar</a></div>
+  {{ form_end(form) }}
+</div>
+{% endblock %}

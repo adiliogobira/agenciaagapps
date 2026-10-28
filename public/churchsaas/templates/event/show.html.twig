@@ -1,0 +1,54 @@
+{% extends 'layout/base.html.twig' %}
+{% block title %}{{ event.name }}{% endblock %}
+{% block body %}
+<div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+  <div>
+    <h4 class="mb-0">{{ event.name }}</h4>
+    <small class="text-muted">{{ event.startsAt|date('d/m/Y H:i') }}{% if event.location %} · {{ event.location }}{% endif %}{% if event.fee %} · R$ {{ event.fee|number_format(2,',','.') }}{% endif %}</small>
+  </div>
+  <div class="d-flex gap-2">
+    <a href="{{ path('event_index') }}" class="btn btn-outline-secondary btn-sm">Voltar</a>
+    <form method="post" action="{{ path('event_delete', {id:event.id}) }}" onsubmit="return confirm('Excluir evento?')">
+      <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ event.id) }}">
+      <button class="btn btn-outline-danger btn-sm"><i class="bi bi-trash"></i> Excluir</button>
+    </form>
+  </div>
+</div>
+
+<div class="row g-3">
+  <div class="col-lg-7">
+    <div class="card p-3">
+      <h6 class="mb-3">Inscritos ({{ event.registrations|length }})</h6>
+      <div class="table-responsive">
+        <table class="table align-middle mb-0">
+          <thead class="table-light"><tr><th>Participante</th><th>Pagamento</th><th></th></tr></thead>
+          <tbody>
+          {% for r in event.registrations %}
+            <tr>
+              <td>{{ r.participantName }}</td>
+              <td><span class="badge bg-{{ r.paymentStatus=='pago'?'success':'warning' }}">{{ r.paymentStatus }}</span></td>
+              <td class="text-end">
+                <form method="post" action="{{ path('event_registration_payment', {id:r.id}) }}">
+                  <input type="hidden" name="_token" value="{{ csrf_token('pay' ~ r.id) }}">
+                  <button class="btn btn-sm btn-outline-secondary">{{ r.paymentStatus=='pago' ? 'Marcar pendente' : 'Marcar pago' }}</button>
+                </form>
+              </td>
+            </tr>
+          {% else %}<tr><td colspan="3" class="text-center text-muted py-3">Ninguém inscrito ainda.</td></tr>{% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-5">
+    <div class="card p-3">
+      <h6 class="mb-3">Nova inscrição</h6>
+      <form method="post" action="{{ path('event_register', {id:event.id}) }}">
+        <input type="hidden" name="_token" value="{{ csrf_token('register' ~ event.id) }}">
+        <div class="mb-2"><input name="participantName" class="form-control" placeholder="Nome do participante" required></div>
+        <button class="btn btn-primary w-100"><i class="bi bi-plus-lg"></i> Inscrever</button>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

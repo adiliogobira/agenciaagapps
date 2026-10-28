@@ -1,0 +1,14 @@
+{% extends 'layout/base.html.twig' %}
+{% block title %}Nova turma{% endblock %}
+{% block body %}
+<h4 class="mb-3">Nova turma</h4>
+<div class="card p-4" style="max-width:560px">
+  {{ form_start(form) }}
+  {{ form_row(form.name) }}
+  {{ form_row(form.ageGroup) }}
+  {{ form_row(form.teacher) }}
+  <div class="mt-3"><button class="btn btn-primary">Criar turma</button>
+    <a href="{{ path('school_index') }}" class="btn btn-outline-secondary">Cancelar</a></div>
+  {{ form_end(form) }}
+</div>
+{% endblock %}

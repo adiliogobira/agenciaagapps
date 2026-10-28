@@ -1,0 +1,26 @@
+{% extends 'layout/base.html.twig' %}
+{% block title %}Escola Bíblica{% endblock %}
+{% block body %}
+<div class="page-head">
+  <h4 class="page-title"><span class="ico"><i class="bi bi-mortarboard"></i></span> Escola Bíblica</h4>
+  <a href="{{ path('school_new') }}" class="btn btn-primary"><i class="bi bi-plus-lg"></i> Nova turma</a>
+</div>
+
+<div class="row g-3">
+{% for c in classes %}
+  <div class="col-md-6 col-xl-4">
+    <div class="card p-3 h-100">
+      <h6 class="mb-1">{{ c.name }}</h6>
+      {% if c.ageGroup %}<small class="text-muted">{{ c.ageGroup }}</small>{% endif %}
+      <div class="mt-2 small text-muted">
+        <i class="bi bi-person-video3"></i> {{ c.teacher ?? 'Sem professor' }}<br>
+        <i class="bi bi-people"></i> {{ c.students|length }} alunos
+      </div>
+      <a href="{{ path('school_show', {id:c.id}) }}" class="btn btn-sm btn-outline-primary mt-3">Abrir turma</a>
+    </div>
+  </div>
+{% else %}
+  <div class="col-12"><div class="card p-4 text-center text-muted">Nenhuma turma cadastrada.</div></div>
+{% endfor %}
+</div>
+{% endblock %}

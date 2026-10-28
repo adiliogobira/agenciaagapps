@@ -1,0 +1,23 @@
+{% extends 'layout/base.html.twig' %}
+{% block title %}Histórico do diácono{% endblock %}
+{% block body %}
+<h4 class="mb-3">Histórico de serviços — {{ deacon.name }}</h4>
+<div class="card">
+  <div class="table-responsive">
+  <table class="table mb-0">
+    <thead class="table-light"><tr><th>Data</th><th>Escala</th><th>Tipo</th><th>Posto</th><th>Presença</th></tr></thead>
+    <tbody>
+    {% for a in deacon.assignments %}
+      <tr>
+        <td>{{ a.schedule.scheduledAt|date('d/m/Y') }}</td>
+        <td>{{ a.schedule.title }}</td>
+        <td>{{ a.schedule.typeLabel }}</td>
+        <td>{{ a.position ?? '—' }}</td>
+        <td><span class="badge bg-{{ a.presence=='presente'?'success':'secondary' }}">{{ a.presence }}</span></td>
+      </tr>
+    {% else %}<tr><td colspan="5" class="text-center text-muted py-3">Sem histórico.</td></tr>{% endfor %}
+    </tbody>
+  </table>
+  </div>
+</div>
+{% endblock %}

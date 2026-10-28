@@ -1,0 +1,29 @@
+{% extends 'layout/base.html.twig' %}
+{% block title %}Eventos{% endblock %}
+{% block body %}
+<div class="page-head">
+  <h4 class="page-title"><span class="ico"><i class="bi bi-calendar-event"></i></span> Eventos</h4>
+  <a href="{{ path('event_new') }}" class="btn btn-primary"><i class="bi bi-plus-lg"></i> Novo evento</a>
+</div>
+
+<div class="row g-3">
+{% for e in events %}
+  <div class="col-md-6 col-xl-4">
+    <div class="card p-3 h-100">
+      <div class="d-flex justify-content-between">
+        <span class="badge bg-primary-subtle text-primary">{{ types[e.type] ?? e.type }}</span>
+        <small class="text-muted">{{ e.startsAt|date('d/m/Y') }}</small>
+      </div>
+      <h6 class="mt-2 mb-1">{{ e.name }}</h6>
+      {% if e.location %}<small class="text-muted"><i class="bi bi-geo-alt"></i> {{ e.location }}</small>{% endif %}
+      <div class="mt-2 small text-muted">
+        <i class="bi bi-people"></i> {{ e.registrations|length }} inscritos{% if e.capacity %} / {{ e.capacity }} vagas{% endif %}
+      </div>
+      <a href="{{ path('event_show', {id:e.id}) }}" class="btn btn-sm btn-outline-primary mt-3">Gerenciar</a>
+    </div>
+  </div>
+{% else %}
+  <div class="col-12"><div class="card p-4 text-center text-muted">Nenhum evento cadastrado.</div></div>
+{% endfor %}
+</div>
+{% endblock %}

@@ -1,0 +1,98 @@
+{% extends 'layout/base.html.twig' %}
+{% block title %}Tesouraria{% endblock %}
+{% block body %}
+<div class="page-head">
+  <h4 class="page-title"><span class="ico"><i class="bi bi-cash-coin"></i></span> Tesouraria — {{ year }}</h4>
+  <a href="{{ path('treasury_new') }}" class="btn btn-primary"><i class="bi bi-plus-lg"></i> Novo lançamento</a>
+</div>
+
+<div class="row g-3 mb-4">
+  <div class="col-6 col-lg-3"><div class="card stat-card p-3"><small class="text-muted">Entradas</small><div class="h4 text-success mb-0">R$ {{ income|number_format(2,',','.') }}</div></div></div>
+  <div class="col-6 col-lg-3"><div class="card stat-card p-3"><small class="text-muted">Saídas</small><div class="h4 text-danger mb-0">R$ {{ expense|number_format(2,',','.') }}</div></div></div>
+  <div class="col-6 col-lg-3"><div class="card stat-card p-3"><small class="text-muted">Saldo</small><div class="h4 {{ balance>=0?'text-primary':'text-danger' }} mb-0">R$ {{ balance|number_format(2,',','.') }}</div></div></div>
+  <div class="col-6 col-lg-3"><div class="card stat-card p-3"><small class="text-muted">Dízimos / Ofertas</small><div class="h6 mb-0">R$ {{ tithes|number_format(0,',','.') }} / {{ offerings|number_format(0,',','.') }}</div></div></div>
+</div>
+
+<div class="row g-3 mb-4">
+  <div class="col-lg-8">
+    <div class="card p-3 h-100">
+      <h6 class="mb-1">Fluxo de caixa mensal</h6>
+      <p class="text-muted small mb-3">Comparativo de entradas e saídas em {{ year }}</p>
+      <div style="height:290px"><canvas id="tcf"></canvas></div>
+    </div>
+  </div>
+  <div class="col-lg-4">
+    <div class="card p-3 h-100">
+      <h6 class="mb-1">Entradas por natureza</h6>
+      <p class="text-muted small mb-3">Dízimos, ofertas e campanhas</p>
+      <div style="height:290px"><canvas id="tkinds"></canvas></div>
+    </div>
+  </div>
+  <div class="col-12">
+    <div class="card p-3">
+      <h6 class="mb-1">Despesas por natureza</h6>
+      <p class="text-muted small mb-3">Distribuição das saídas no ano</p>
+      <div style="height:220px"><canvas id="toutBar"></canvas></div>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="table-responsive">
+  <table class="table table-hover align-middle mb-0">
+    <thead class="table-light"><tr><th>Data</th><th>Descrição</th><th>Natureza</th><th>Contribuinte</th><th class="text-end">Valor</th><th></th></tr></thead>
+    <tbody>
+    {% for t in transactions %}
+      <tr>
+        <td>{{ t.occurredAt|date('d/m/Y') }}</td>
+        <td>{{ t.description ?? t.kind }}</td>
+        <td class="text-capitalize">{{ t.kind }}</td>
+        <td>{{ t.member ?? '—' }}</td>
+        <td class="text-end {{ t.income?'text-success':'text-danger' }}">{{ t.income?'+':'−' }} R$ {{ t.amount|number_format(2,',','.') }}</td>
+        <td class="text-end">
+          <form method="post" action="{{ path('treasury_delete', {id:t.id}) }}" onsubmit="return confirm('Excluir?')">
+            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ t.id) }}">
+            <button class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></button>
+          </form>
+        </td>
+      </tr>
+    {% else %}<tr><td colspan="6" class="text-center text-muted py-4">Nenhum lançamento.</td></tr>{% endfor %}
+    </tbody>
+  </table>
+  </div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+<script>
+  var NOMES = { dizimo:'Dízimos', oferta:'Ofertas', campanha:'Campanhas', despesa:'Despesas', outro:'Outros' };
+
+  // ----- Barras: fluxo de caixa mensal -----
+  (function () {
+    var cf = {{ cashFlow|json_encode|raw }};
+    var meses = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
+    AppCharts.bar('tcf', meses, [
+      { label:'Entradas', data:Object.values(cf).map(function(x){ return x.entrada; }), color:'#10b981' },
+      { label:'Saídas',   data:Object.values(cf).map(function(x){ return x.saida; }),   color:'#ef4444' }
+    ], { money:true });
+  })();
+
+  // ----- Pizza: entradas por natureza -----
+  (function () {
+    var k = {{ kindsIn|json_encode|raw }};
+    var labels = [], data = [];
+    Object.keys(k).forEach(function (key) { labels.push(NOMES[key] || key); data.push(k[key]); });
+    AppCharts.doughnut('tkinds', labels, data, {
+      money:true, centerLabel:'Entradas', emptyText:'Sem entradas em {{ year }}'
+    });
+  })();
+
+  // ----- Barras horizontais: despesas por natureza -----
+  (function () {
+    var k = {{ kindsOut|json_encode|raw }};
+    var labels = [], data = [];
+    Object.keys(k).forEach(function (key) { labels.push(NOMES[key] || key); data.push(k[key]); });
+    AppCharts.barH('toutBar', labels, data, { money:true, emptyText:'Sem despesas em {{ year }}' });
+  })();
+</script>
+{% endblock %}

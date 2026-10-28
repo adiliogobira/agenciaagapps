@@ -1,0 +1,106 @@
+{% extends 'layout/base.html.twig' %}
+{% block title %}Mesa da Santa Ceia — {{ schedule.title }}{% endblock %}
+{% block body %}
+<div class="page-head">
+  <div>
+    <h4 class="page-title"><span class="ico"><i class="bi bi-cup-hot"></i></span> Mesa da Santa Ceia</h4>
+    <small class="text-muted">{{ schedule.title }} · {{ schedule.scheduledAt|date('d/m/Y H:i') }}</small>
+  </div>
+  <a href="{{ path('diaconia_show', {id:schedule.id}) }}" class="btn btn-outline-secondary btn-sm">Voltar à escala</a>
+</div>
+
+<div class="row g-3">
+  <div class="col-lg-7">
+    <div class="card p-3">
+      <h6 class="mb-3">Composição da mesa</h6>
+
+      {% set roleOrder = {'presidente':1,'oracao':2,'consagracao':3,'composicao':4} %}
+      {% set grouped = {} %}
+      {% for seat in table.seats %}
+        {% set r = seat.role %}
+        {% set grouped = grouped|merge({(r): (grouped[r] is defined ? grouped[r]|merge([seat]) : [seat])}) %}
+      {% endfor %}
+
+      {% for role, label in roles %}
+        {% if grouped[role] is defined %}
+        <div class="mb-3">
+          <div class="text-uppercase small fw-semibold text-muted mb-1">{{ label }}</div>
+          {% for s in grouped[role] %}
+          <div class="d-flex justify-content-between align-items-center border rounded p-2 mb-1">
+            <span>
+              <i class="bi bi-person-fill text-primary"></i>
+              <strong>{{ s.personName }}</strong>
+              {% if s.notes %}<small class="text-muted"> — {{ s.notes }}</small>{% endif %}
+              {% if s.member %}<span class="badge bg-info-subtle text-info ms-1">membro</span>{% endif %}
+            </span>
+            <form method="post" action="{{ path('communion_seat_remove', {scheduleId:schedule.id, id:s.id}) }}">
+              <input type="hidden" name="_token" value="{{ csrf_token('seat_rm' ~ s.id) }}">
+              <button class="btn btn-sm btn-outline-danger"><i class="bi bi-x-lg"></i></button>
+            </form>
+          </div>
+          {% endfor %}
+        </div>
+        {% endif %}
+      {% endfor %}
+
+      {% if table.seats is empty %}
+        <p class="text-muted mb-0">A mesa ainda não tem ninguém. Adicione ao lado.</p>
+      {% endif %}
+    </div>
+
+    <div class="card p-3 mt-3">
+      <h6 class="mb-2">Observações da mesa</h6>
+      <form method="post" action="{{ path('communion_notes', {scheduleId:schedule.id}) }}">
+        <input type="hidden" name="_token" value="{{ csrf_token('notes' ~ schedule.id) }}">
+        <textarea name="notes" class="form-control mb-2" rows="3">{{ table.notes }}</textarea>
+        <button class="btn btn-sm btn-outline-primary">Salvar observações</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="col-lg-5">
+    <div class="card p-3">
+      <h6 class="mb-3">Convocar para a mesa</h6>
+      <form method="post" action="{{ path('communion_seat_add', {scheduleId:schedule.id}) }}">
+        <input type="hidden" name="_token" value="{{ csrf_token('seat' ~ schedule.id) }}">
+
+        <div class="mb-2">
+          <label class="form-label">Papel na mesa</label>
+          <select name="role" class="form-select" required>
+            {% for k, l in roles %}<option value="{{ k }}">{{ l }}</option>{% endfor %}
+          </select>
+        </div>
+
+        <div class="mb-2">
+          <label class="form-label">Nome <small class="text-muted">(missionário, pastor convidado…)</small></label>
+          <input name="personName" class="form-control" required placeholder="Nome completo" id="personNameInput">
+        </div>
+
+        <div class="mb-2">
+          <label class="form-label">Vincular a membro <small class="text-muted">(opcional — para notificação)</small></label>
+          <select name="member_id" class="form-select" id="memberSelect" onchange="syncName(this)">
+            <option value="">— nenhum —</option>
+            {% for m in members %}<option value="{{ m.id }}" data-name="{{ m.fullName }}">{{ m.fullName }}</option>{% endfor %}
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Observação <small class="text-muted">(opcional)</small></label>
+          <input name="notes" class="form-control" placeholder="Ex.: Pr. João vem de BH">
+        </div>
+
+        <button class="btn btn-primary w-100"><i class="bi bi-plus-lg"></i> Adicionar à mesa</button>
+      </form>
+      <small class="text-muted d-block mt-2">Se vinculado a um membro cadastrado, ele receberá uma notificação de convocação.</small>
+    </div>
+  </div>
+</div>
+
+<script>
+function syncName(sel) {
+  const opt = sel.options[sel.selectedIndex];
+  const nameInput = document.getElementById('personNameInput');
+  if (opt.dataset.name) nameInput.value = opt.dataset.name;
+}
+</script>
+{% endblock %}

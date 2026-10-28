@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>{% block title %}{{ app_name }}{% endblock %}</title>
+
+    {# ---- PWA ---- #}
+    <link rel="manifest" href="{{ asset('manifest.webmanifest') }}">
+    <meta name="theme-color" content="#4f46e5">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Diaconia">
+    <link rel="apple-touch-icon" href="{{ asset('assets/icons/apple-touch-icon.png') }}">
+    <link rel="icon" href="{{ asset('assets/icons/favicon-64.png') }}">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="{{ asset('assets/css/app.css') }}" rel="stylesheet">
+    {% block stylesheets %}{% endblock %}
+</head>
+<body>
+{% if app.user %}
+{% set route = app.request.attributes.get('_route') %}
+<div class="app-shell">
+
+    {# ============ SIDEBAR (desktop) ============ #}
+    <aside class="sidebar d-none d-lg-flex">
+        <div class="sidebar-brand">
+            <i class="bi bi-buildings"></i>
+            <span class="text-truncate">{{ app.user.church }}</span>
+        </div>
+        <nav class="sidebar-nav">
+            {{ include('layout/_nav_links.html.twig', {route: route, style: 'sidebar'}) }}
+        </nav>
+        <div class="sidebar-footer">
+            <div class="small text-truncate">{{ app.user.fullName }}</div>
+            <a href="{{ path('app_logout') }}" class="btn btn-sm btn-outline-light w-100 mt-2"><i class="bi bi-box-arrow-right"></i> Sair</a>
+        </div>
+    </aside>
+
+    {# ============ CONTEÚDO ============ #}
+    <main class="content">
+        {# Barra do topo (todas as telas): marca no mobile + sino de notificações #}
+        <header class="topbar">
+            <div class="d-flex align-items-center gap-2 text-truncate d-lg-none">
+                <i class="bi bi-buildings"></i>
+                <strong class="text-truncate">{{ app.user.church }}</strong>
+            </div>
+            <div class="topbar-spacer d-none d-lg-block"></div>
+
+            <div class="d-flex align-items-center gap-2">
+                {# ---- Sino de notificações ---- #}
+                {% set unread = app_notifications_unread() %}
+                <div class="dropdown">
+                    <button class="btn btn-sm btn-light position-relative" type="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
+                        <i class="bi bi-bell"></i>
+                        {% if unread > 0 %}
+                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                {{ unread > 9 ? '9+' : unread }}
+                            </span>
+                        {% endif %}
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-end notif-menu shadow">
+                        <div class="d-flex justify-content-between align-items-center px-3 py-2 border-bottom">
+                            <strong>Notificações</strong>
+                            {% if unread > 0 %}
+                                <form method="post" action="{{ path('notification_read_all') }}" class="m-0">
+                                    <input type="hidden" name="_token" value="{{ csrf_token('read_all') }}">
+                                    <button class="btn btn-link btn-sm p-0 text-decoration-none">Marcar lidas</button>
+                                </form>
+                            {% endif %}
+                        </div>
+                        <div class="notif-list">
+                            {% for n in app_notifications_recent() %}
+                                <a href="{{ path('notification_open', {id:n.id}) }}" class="dropdown-item d-flex gap-2 py-2 {{ n.read ? '' : 'fw-semibold bg-primary-subtle' }}">
+                                    <i class="bi bi-{{ n.icon }} text-primary"></i>
+                                    <span class="flex-grow-1 text-wrap">
+                                        {{ n.title }}
+                                        <small class="d-block text-muted fw-normal">{{ n.createdAt|date('d/m H:i') }}</small>
+                                    </span>
+                                </a>
+                            {% else %}
+                                <div class="dropdown-item text-muted small">Nenhuma notificação.</div>
+                            {% endfor %}
+                        </div>
+                        <a href="{{ path('notification_index') }}" class="dropdown-item text-center border-top small text-primary">Ver todas</a>
+                    </div>
+                </div>
+
+                {# ---- Menu (mobile) ---- #}
+                <button class="btn btn-sm btn-light d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#menu">
+                    <i class="bi bi-list"></i>
+                </button>
+            </div>
+        </header>
+
+        <div class="app-content container-fluid">
+            {% for label, messages in app.flashes %}
+                {% for message in messages %}
+                    {% set cls = label in ['success','danger','warning','info'] ? label : (label == 'error' ? 'danger' : 'info') %}
+                    <div class="alert alert-{{ cls }} alert-dismissible fade show">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+                {% endfor %}
+            {% endfor %}
+            {% block body %}{% endblock %}
+        </div>
+    </main>
+
+    {# ============ BOTTOM NAV (mobile) ============ #}
+    <nav class="bottom-nav d-lg-none">
+        <a class="bn-item {{ route == 'app_dashboard' ? 'active' }}" href="{{ path('app_dashboard') }}">
+            <i class="bi bi-speedometer2"></i><span>Painel</span>
+        </a>
+        {% if is_granted('MODULE_MEMBERS') %}
+        <a class="bn-item {{ route starts with 'member' ? 'active' }}" href="{{ path('member_index') }}">
+            <i class="bi bi-people"></i><span>Membros</span>
+        </a>
+        {% endif %}
+        {% if is_granted('MODULE_DIACONIA') %}
+        <a class="bn-item {{ route starts with 'diaconia' ? 'active' }}" href="{{ path('diaconia_index') }}">
+            <i class="bi bi-hand-thumbs-up"></i><span>Diaconia</span>
+        </a>
+        {% endif %}
+        {% if is_granted('MODULE_TREASURY') %}
+        <a class="bn-item {{ route starts with 'treasury' ? 'active' }}" href="{{ path('treasury_index') }}">
+            <i class="bi bi-cash-coin"></i><span>Tesouraria</span>
+        </a>
+        {% endif %}
+        <button class="bn-item" type="button" data-bs-toggle="offcanvas" data-bs-target="#menu">
+            <i class="bi bi-grid"></i><span>Mais</span>
+        </button>
+    </nav>
+</div>
+
+{# ============ OFFCANVAS "MAIS" (menu completo, mobile) ============ #}
+<div class="offcanvas offcanvas-end" tabindex="-1" id="menu">
+    <div class="offcanvas-header sidebar-brand text-white">
+        <div class="d-flex align-items-center gap-2 text-truncate">
+            <i class="bi bi-buildings"></i><span class="text-truncate">{{ app.user.church }}</span>
+        </div>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"></button>
+    </div>
+    <div class="offcanvas-body d-flex flex-column">
+        <nav class="sidebar-nav flex-grow-1">
+            {{ include('layout/_nav_links.html.twig', {route: route, style: 'offcanvas'}) }}
+        </nav>
+        <div class="pt-3 border-top">
+            <div class="small text-muted mb-2"><i class="bi bi-person-circle"></i> {{ app.user.fullName }}</div>
+            <button id="pwa-install" class="btn btn-sm btn-outline-primary w-100 mb-2 d-none"><i class="bi bi-download"></i> Instalar aplicativo</button>
+            <a href="{{ path('app_logout') }}" class="btn btn-sm btn-outline-danger w-100"><i class="bi bi-box-arrow-right"></i> Sair</a>
+        </div>
+    </div>
+</div>
+{% else %}
+    {% block auth %}{% endblock %}
+{% endif %}
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+<script src="{{ asset('assets/js/charts.js') }}"></script>
+<script>
+  // Registro do service worker (PWA)
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => navigator.serviceWorker.register('/sw.js').catch(() => {}));
+  }
+  // Botão "Instalar aplicativo"
+  let deferredPrompt;
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    const btn = document.getElementById('pwa-install');
+    if (btn) {
+      btn.classList.remove('d-none');
+      btn.addEventListener('click', async () => {
+        btn.classList.add('d-none');
+        deferredPrompt.prompt();
+        await deferredPrompt.userChoice;
+        deferredPrompt = null;
+      });
+    }
+  });
+</script>
+{% block javascripts %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,24 @@
+parameters:
+
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+
+    App\:
+        resource: '../src/'
+        exclude:
+            - '../src/DependencyInjection/'
+            - '../src/Entity/'
+            - '../src/Kernel.php'
+
+    # Contexto do tenant (igreja atual) — escopo por requisição
+    App\Tenant\TenantContext:
+        public: true
+
+    # Assinante que resolve a igreja, ativa o filtro Doctrine e injeta
+    # a igreja em novas entidades (prePersist).
+    App\EventSubscriber\TenantSubscriber:
+        tags:
+            - { name: kernel.event_subscriber }
+            - { name: doctrine.event_listener, event: prePersist }

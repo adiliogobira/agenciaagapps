@@ -1,0 +1,15 @@
+{# Links de navegação reaproveitados no sidebar (desktop) e no offcanvas (mobile).
+   Recebe: route (rota atual) e style ('sidebar' | 'offcanvas'). #}
+<a class="nav-link {{ route == 'app_dashboard' ? 'active' }}" href="{{ path('app_dashboard') }}"><i class="bi bi-speedometer2"></i> Painel</a>
+{% if is_granted('MODULE_MEMBERS') %}<a class="nav-link {{ route starts with 'member' ? 'active' }}" href="{{ path('member_index') }}"><i class="bi bi-people"></i> Membros</a>{% endif %}
+{% if is_granted('MODULE_DIACONIA') %}<a class="nav-link {{ route starts with 'diaconia' ? 'active' }}" href="{{ path('diaconia_index') }}"><i class="bi bi-hand-thumbs-up"></i> Diaconia</a>{% endif %}
+{% if is_granted('ROLE_PASTOR') %}<a class="nav-link {{ route starts with 'deacon_manage' ? 'active' }}" href="{{ path('deacon_manage_index') }}"><i class="bi bi-person-badge"></i> Gestão de diáconos</a>{% endif %}
+{% if is_granted('MODULE_INVENTORY') %}<a class="nav-link {{ route starts with 'inventory' ? 'active' }}" href="{{ path('inventory_index') }}"><i class="bi bi-box-seam"></i> Estoque de doações</a>{% endif %}
+{% if is_granted('MODULE_TREASURY') %}<a class="nav-link {{ route starts with 'treasury' ? 'active' }}" href="{{ path('treasury_index') }}"><i class="bi bi-cash-coin"></i> Tesouraria</a>{% endif %}
+{# {% if is_granted('MODULE_PASTORAL') %}<a class="nav-link {{ route starts with 'pastoral' ? 'active' }}" href="{{ path('pastoral_index') }}"><i class="bi bi-book"></i> Pastoral</a>{% endif %} #}
+{% if is_granted('MODULE_EVENTS') %}<a class="nav-link {{ route starts with 'event' ? 'active' }}" href="{{ path('event_index') }}"><i class="bi bi-calendar-event"></i> Eventos</a>{% endif %}
+{# {% if is_granted('MODULE_SCHOOL') %}<a class="nav-link {{ route starts with 'school' ? 'active' }}" href="{{ path('school_index') }}"><i class="bi bi-mortarboard"></i> Escola Bíblica</a>{% endif %} #}
+{% if is_granted('MODULE_COMMS') %}<a class="nav-link {{ route starts with 'communication' ? 'active' }}" href="{{ path('communication_index') }}"><i class="bi bi-megaphone"></i> Comunicação</a>{% endif %}
+{% if is_granted('MODULE_REPORTS') %}<a class="nav-link {{ route starts with 'report' ? 'active' }}" href="{{ path('report_index') }}"><i class="bi bi-graph-up"></i> Relatórios</a>{% endif %}
+{% if is_granted('MODULE_ADMIN') %}<a class="nav-link {{ route starts with 'ministry' ? 'active' }}" href="{{ path('ministry_index') }}"><i class="bi bi-collection"></i> Ministérios</a>{% endif %}
+{% if is_granted('MODULE_ADMIN') %}<a class="nav-link {{ route starts with 'admin' ? 'active' }}" href="{{ path('admin_index') }}"><i class="bi bi-gear"></i> Administração</a>{% endif %}

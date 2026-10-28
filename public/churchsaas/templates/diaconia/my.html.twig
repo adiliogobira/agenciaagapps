@@ -1,0 +1,66 @@
+{% extends 'layout/base.html.twig' %}
+{% block title %}Minhas escalas{% endblock %}
+{% block body %}
+<div class="page-head">
+  <h4 class="page-title"><span class="ico"><i class="bi bi-person-check"></i></span> Minhas escalas</h4>
+  <a href="{{ path('diaconia_open') }}" class="btn btn-success btn-sm"><i class="bi bi-hand-index-thumb"></i> Ver vagas para servir</a>
+</div>
+
+{% if not me %}
+  <div class="alert alert-warning">Seu usuário não está vinculado a um cadastro de diácono.</div>
+{% endif %}
+
+<div class="card">
+  <div class="table-responsive">
+    <table class="table align-middle mb-0">
+      <thead class="table-light"><tr><th>Data</th><th>Escala</th><th>Atividade</th><th>Local</th><th class="text-end">Ação</th></tr></thead>
+      <tbody>
+      {% for slot in slots %}
+        {% set s = slot.schedule %}
+        <tr>
+          <td>{{ s.scheduledAt|date('d/m/Y H:i') }}</td>
+          <td><span class="badge bg-primary-subtle text-primary">{{ s.typeLabel }}</span> {{ s.title }}</td>
+          <td><strong>{{ slot.activityLabel }}</strong>{% if slot.notes %} <small class="text-muted">— {{ slot.notes }}</small>{% endif %}</td>
+          <td class="text-muted">{{ s.location ?? '—' }}</td>
+          <td class="text-end">
+            <button class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#leave{{ slot.id }}">
+              <i class="bi bi-box-arrow-right"></i> Desmarcar-se
+            </button>
+          </td>
+        </tr>
+      {% else %}
+        <tr><td colspan="5" class="text-center text-muted py-4">Você não está escalado em nenhuma vaga futura. <a href="{{ path('diaconia_open') }}">Ver vagas abertas</a>.</td></tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+{# Modais de desmarcação (motivo obrigatório) #}
+{% for slot in slots %}
+  <div class="modal fade" id="leave{{ slot.id }}" tabindex="-1">
+    <div class="modal-dialog">
+      <form method="post" action="{{ path('diaconia_slot_withdraw', {id:slot.id}) }}" class="modal-content">
+        <input type="hidden" name="_token" value="{{ csrf_token('slot_withdraw' ~ slot.id) }}">
+        <div class="modal-header">
+          <h5 class="modal-title">Sair da escala</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <p class="mb-2 small text-muted">
+            {{ slot.activityLabel }} — {{ slot.schedule.title }} ({{ slot.schedule.scheduledAt|date('d/m/Y H:i') }})
+          </p>
+          <label class="form-label">Motivo da saída <span class="text-danger">*</span></label>
+          <textarea name="reason" class="form-control" rows="3" required
+            placeholder="Ex.: imprevisto de trabalho, viagem, motivo de saúde..."></textarea>
+          <small class="text-muted">O líder do diaconato verá este motivo e a vaga voltará a ficar aberta.</small>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button class="btn btn-danger"><i class="bi bi-box-arrow-right"></i> Confirmar saída</button>
+        </div>
+      </form>
+    </div>
+  </div>
+{% endfor %}
+{% endblock %}

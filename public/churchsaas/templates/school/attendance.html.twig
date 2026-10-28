@@ -1,0 +1,26 @@
+{% extends 'layout/base.html.twig' %}
+{% block title %}Chamada — {{ class.name }}{% endblock %}
+{% block body %}
+<h4 class="mb-3"><i class="bi bi-check2-square text-primary"></i> Chamada — {{ class.name }}</h4>
+<div class="card p-4" style="max-width:640px">
+  <form method="post" action="{{ path('school_attendance', {id:class.id}) }}">
+    <input type="hidden" name="_token" value="{{ csrf_token('att' ~ class.id) }}">
+    <div class="mb-3" style="max-width:220px">
+      <label class="form-label">Data</label>
+      <input type="date" name="date" value="{{ today }}" class="form-control">
+    </div>
+    <div class="list-group mb-3">
+      {% for s in class.students %}
+        <label class="list-group-item d-flex align-items-center gap-2">
+          <input class="form-check-input m-0" type="checkbox" name="present[]" value="{{ s.id }}" checked>
+          {{ s.fullName }}
+        </label>
+      {% else %}
+        <div class="list-group-item text-muted">Nenhum aluno cadastrado nesta turma.</div>
+      {% endfor %}
+    </div>
+    <button class="btn btn-primary">Salvar chamada</button>
+    <a href="{{ path('school_show', {id:class.id}) }}" class="btn btn-outline-secondary">Cancelar</a>
+  </form>
+</div>
+{% endblock %}

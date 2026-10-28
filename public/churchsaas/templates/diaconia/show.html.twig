@@ -1,0 +1,159 @@
+{% extends 'layout/base.html.twig' %}
+{% block title %}{{ schedule.title }}{% endblock %}
+{% block body %}
+	<div class="page-head">
+		<div>
+			<h4 class="mb-0">{{ schedule.title }}</h4>
+			<small class="text-muted">
+			{{ schedule.typeLabel }} · {{ schedule.scheduledAt|date('d/m/Y H:i') }}
+			{% if schedule.location %} · {{ schedule.location }} {% endif %}
+			</small>
+		</div>
+		<div class="d-flex flex-wrap gap-2">
+			<button class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#roster{{ schedule.id }}">
+			<i class="bi bi-people"></i> Ver escalados / marcar-me
+			</button>
+			{% if schedule.type == 'santa_ceia' and is_granted('ROLE_PASTOR') %}
+				<a href="{{ path('communion_show', {scheduleId:schedule.id}) }}" class="btn btn-warning btn-sm">
+					<i class="bi bi-cup-hot"></i>
+					Mesa da Ceia
+				</a>
+			{% endif %}
+			<a href="{{ path('diaconia_index') }}" class="btn btn-outline-secondary btn-sm">Voltar</a>
+		</div>
+	</div>
+	{# ===================== VAGAS DE SERVIÇO (auto-inscrição) ===================== #}
+	<div class="row g-3">
+		<div class="col-lg-7">
+			<div class="card p-3">
+				<div class="d-flex justify-content-between align-items-center mb-3">
+					<h6 class="mb-0"><i class="bi bi-clipboard-check text-success"></i> Vagas de serviço</h6>
+					<span class="small text-muted">{{ schedule.countFilledSlots }} preenchidas · {{ schedule.countOpenSlots }} abertas</span>
+				</div>
+				<table class="table align-middle mb-0">
+					<thead class="table-light">
+						<tr>
+							<th>Atividade</th>
+							<th>Situação</th>
+							{% if canManage %}
+								<th></th>
+							{% endif %}
+						</tr>
+					</thead>
+					<tbody>
+						{% for slot in schedule.slots %}
+							<tr>
+								<td>
+									<strong>{{ slot.activityLabel }}</strong>
+									{% if slot.notes %}
+										<br>
+										<small class="text-muted">
+										{{ slot.notes }}
+										</small>
+									{% endif %}
+								</td>
+								<td>
+									{% if slot.isFilled %}
+										<span class="badge bg-success">
+											<i class="bi bi-person-check"></i>
+											{{ slot.deacon ? slot.deacon.name : '—' }}
+										</span>
+										{% if slot.acceptedAt %}
+											<br>
+											<small class="text-muted">
+											aceita em {{ slot.acceptedAt|date('d/m/Y H:i') }}
+											</small>
+										{% endif %}
+									{% else %}
+										<span class="badge bg-warning-subtle text-warning-emphasis">Aberta</span>
+									{% endif %}
+									{% if slot.withdrawals|length %}
+										<div class="mt-1">
+											<small class="text-danger"><i class="bi bi-exclamation-triangle"></i> Saídas anteriores:</small>
+											<ul class="small text-muted mb-0 ps-3">
+												{% for w in slot.withdrawals %}
+													<li>{{ w.deaconName }} — "{{ w.reason }}" <span class="text-muted">({{ w.createdAt|date('d/m/Y') }})</span></li>
+												{% endfor %}
+											</ul>
+										</div>
+									{% endif %}
+								</td>
+								{% if canManage %}
+									<td class="text-end">
+										<form method="post" action="{{ path('diaconia_slot_delete', {id:slot.id}) }}" onsubmit="return confirm('Remover esta vaga?')">
+											<input type="hidden" name="_token" value="{{ csrf_token('slot_delete' ~ slot.id) }}">
+											<button class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></button>
+										</form>
+									</td>
+								{% endif %}
+							</tr>
+						{% else %}
+							<tr><td colspan="{{ canManage ? 3 : 2 }}" class="text-center text-muted py-3">Nenhuma vaga criada.{% if canManage %} Monte a escala de serviço ao lado.{% endif %}</td></tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+		</div>
+		{% if canManage %}
+			<div class="col-lg-5">
+				<div class="card p-3">
+					<h6 class="mb-3"><i class="bi bi-plus-square text-primary"></i> Montar vaga de serviço</h6>
+					{{ form_start(slotForm) }}
+					<div class="mb-2">{{ form_row(slotForm.activity) }}</div>
+					<div class="mb-2">{{ form_row(slotForm.notes) }}</div>
+					<button class="btn btn-success w-100"><i class="bi bi-plus-lg"></i> Adicionar vaga</button>
+					{{ form_end(slotForm) }}
+					<small class="text-muted d-block mt-2">Os diáconos verão estas vagas em "Vagas para servir" e poderão aceitá-las.</small>
+				</div>
+			</div>
+		{% endif %}
+	</div>
+	{# ===================== DESIGNAÇÃO E PRESENÇA (fluxo do líder) ===================== #}
+	<div class="row g-3 mt-1">
+		<div class="col-lg-7">
+			<div class="card p-3">
+				<h6 class="mb-3">Diáconos designados ({{ schedule.assignments|length }})</h6>
+				<table class="table align-middle mb-0">
+					<thead class="table-light"><tr><th>Diácono</th><th>Posto</th><th>Presença</th></tr></thead>
+					<tbody>
+						{% for a in schedule.assignments %}
+							<tr>
+								<td>{{ a.deacon.name }}</td>
+								<td>{{ a.position ?? '—' }}</td>
+								<td>
+									<span class="badge bg-{{ a.presence=='presente'?'success':(a.presence=='ausente'?'danger':(a.presence=='confirmado'?'info':'secondary')) }}">{{ a.presence }}</span>
+									<div class="btn-group btn-group-sm ms-2">
+										{% for st, ic in {'confirmado':'check2','presente':'person-check','ausente':'person-x'} %}
+											<form method="post" action="{{ path('diaconia_presence', {id:a.id, status:st}) }}" class="d-inline">
+												<button class="btn btn-outline-secondary btn-sm" title="{{ st }}"><i class="bi bi-{{ ic }}"></i></button>
+											</form>
+										{% endfor %}
+									</div>
+								</td>
+							</tr>
+							{% else %}<tr><td colspan="3" class="text-center text-muted py-3">Ninguém designado.</td></tr>{% endfor %}
+						</tbody>
+					</table>
+				</div>
+			</div>
+			{% if canManage %}
+				<div class="col-lg-5">
+					<div class="card p-3">
+						<h6 class="mb-3">Designar diácono diretamente</h6>
+						<form method="post" action="{{ path('diaconia_assign', {id:schedule.id}) }}">
+							<input type="hidden" name="_token" value="{{ csrf_token('assign' ~ schedule.id) }}">
+							<div class="mb-2">
+								<select name="deacon" class="form-select" required>
+									<option value="">Selecione...</option>
+									{% for d in availableDeacons %}<option value="{{ d.id }}">{{ d.name }}</option>{% endfor %}
+								</select>
+							</div>
+							<div class="mb-2"><input name="position" class="form-control" placeholder="Posto (ex.: porta principal)"></div>
+							<button class="btn btn-primary w-100"><i class="bi bi-plus-lg"></i> Escalar</button>
+						</form>
+					</div>
+				</div>
+			{% endif %}
+		</div>
+		{{ include('diaconia/_roster_modal.html.twig', {schedule: schedule, me: me, activities: activities}) }}
+	{% endblock %}

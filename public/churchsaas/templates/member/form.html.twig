@@ -1,0 +1,32 @@
+{% extends 'layout/base.html.twig' %}
+{% block title %}{{ member.id ? 'Editar' : 'Novo' }} membro{% endblock %}
+{% block body %}
+<h4 class="mb-3">{{ member.id ? 'Editar membro' : 'Novo membro' }}</h4>
+<div class="card p-4">
+  {{ form_start(form) }}
+  <div class="row g-3">
+    <div class="col-md-6">{{ form_row(form.fullName) }}</div>
+    <div class="col-md-3">{{ form_row(form.cpf) }}</div>
+    <div class="col-md-3">{{ form_row(form.rg) }}</div>
+    <div class="col-md-3">{{ form_row(form.birthDate) }}</div>
+    <div class="col-md-3">{{ form_row(form.gender) }}</div>
+    <div class="col-md-3">{{ form_row(form.maritalStatus) }}</div>
+    <div class="col-md-3">{{ form_row(form.phone) }}</div>
+    <div class="col-md-6">{{ form_row(form.email) }}</div>
+    <div class="col-md-6">{{ form_row(form.address) }}</div>
+    <hr class="mt-2">
+    <div class="col-md-3">{{ form_row(form.baptismDate) }}</div>
+    <div class="col-md-3">{{ form_row(form.membershipDate) }}</div>
+    <div class="col-md-3">{{ form_row(form.entryType) }}</div>
+    <div class="col-md-3">{{ form_row(form.churchRole) }}</div>
+    <div class="col-md-4">{{ form_row(form.ministries) }}</div>
+    <div class="col-md-4">{{ form_row(form.status) }}</div>
+    <div class="col-12">{{ form_row(form.notes) }}</div>
+  </div>
+  <div class="mt-4">
+    <button class="btn btn-primary">Salvar</button>
+    <a href="{{ path('member_index') }}" class="btn btn-outline-secondary">Cancelar</a>
+  </div>
+  {{ form_end(form) }}
+</div>
+{% endblock %}

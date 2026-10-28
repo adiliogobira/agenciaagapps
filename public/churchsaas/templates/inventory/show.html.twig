@@ -1,0 +1,70 @@
+{% extends 'layout/base.html.twig' %}
+{% block title %}{{ item.name }}{% endblock %}
+{% block body %}
+<div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+  <div>
+    <h4 class="mb-0">{{ item.name }}</h4>
+    <small class="text-muted">{{ item.categoryLabel }} · em estoque:
+      <strong>{{ item.quantity|number_format(item.quantity == item.quantity|round ? 0 : 2, ',', '.') }} {{ item.unit }}</strong>
+      {% if item.isLow %}<span class="badge bg-warning text-dark">estoque baixo</span>{% endif %}
+    </small>
+  </div>
+  <div class="d-flex gap-2">
+    <a href="{{ path('inventory_index') }}" class="btn btn-outline-secondary btn-sm">Voltar</a>
+    <form method="post" action="{{ path('inventory_delete', {id:item.id}) }}" onsubmit="return confirm('Remover item?')">
+      <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ item.id) }}">
+      <button class="btn btn-outline-danger btn-sm"><i class="bi bi-trash"></i></button>
+    </form>
+  </div>
+</div>
+
+<div class="row g-3">
+  <div class="col-lg-5">
+    <div class="card p-3">
+      <h6 class="mb-3">Registrar movimentação</h6>
+      <form method="post" action="{{ path('inventory_move', {id:item.id}) }}">
+        <input type="hidden" name="_token" value="{{ csrf_token('move' ~ item.id) }}">
+        <div class="btn-group w-100 mb-3" role="group">
+          <input type="radio" class="btn-check" name="direction" id="dir-in" value="entrada" checked>
+          <label class="btn btn-outline-success" for="dir-in"><i class="bi bi-box-arrow-in-down"></i> Entrada</label>
+          <input type="radio" class="btn-check" name="direction" id="dir-out" value="saida">
+          <label class="btn btn-outline-danger" for="dir-out"><i class="bi bi-box-arrow-up"></i> Saída</label>
+        </div>
+        <div class="mb-2">
+          <label class="form-label">Quantidade ({{ item.unit }})</label>
+          <input name="quantity" type="number" step="0.01" min="0.01" class="form-control" required>
+        </div>
+        <div class="mb-2">
+          <label class="form-label">Doador (opcional)</label>
+          <input name="donor" class="form-control" placeholder="Ex.: Família Silva">
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Observação (opcional)</label>
+          <input name="notes" class="form-control">
+        </div>
+        <button class="btn btn-primary w-100">Registrar</button>
+      </form>
+    </div>
+  </div>
+  <div class="col-lg-7">
+    <div class="card p-3">
+      <h6 class="mb-3">Histórico de movimentações</h6>
+      <div class="table-responsive">
+        <table class="table align-middle mb-0">
+          <thead class="table-light"><tr><th>Data</th><th>Tipo</th><th class="text-end">Qtd.</th><th>Doador/Obs.</th></tr></thead>
+          <tbody>
+          {% for m in item.movements %}
+            <tr>
+              <td>{{ m.createdAt|date('d/m/Y H:i') }}</td>
+              <td><span class="badge bg-{{ m.incoming ? 'success' : 'danger' }}">{{ m.incoming ? 'entrada' : 'saída' }}</span></td>
+              <td class="text-end">{{ m.incoming ? '+' : '−' }}{{ m.quantity|number_format(m.quantity == m.quantity|round ? 0 : 2, ',', '.') }}</td>
+              <td class="small text-muted">{{ m.donor ?? '' }}{% if m.donor and m.notes %} — {% endif %}{{ m.notes ?? '' }}</td>
+            </tr>
+          {% else %}<tr><td colspan="4" class="text-center text-muted py-3">Sem movimentações.</td></tr>{% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

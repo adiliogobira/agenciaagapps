@@ -1,0 +1,75 @@
+{% extends 'layout/base.html.twig' %}
+{% block title %}Estoque de doações{% endblock %}
+{% block body %}
+<div class="page-head">
+  <h4 class="page-title"><span class="ico"><i class="bi bi-box-seam"></i></span> Estoque de doações</h4>
+  <a href="{{ path('inventory_new') }}" class="btn btn-primary"><i class="bi bi-plus-lg"></i> Novo item</a>
+</div>
+
+{% if lowCount > 0 %}
+  <div class="alert alert-warning py-2"><i class="bi bi-exclamation-triangle"></i> {{ lowCount }} item(ns) com estoque baixo.</div>
+{% endif %}
+
+<div class="row g-3 mb-3">
+  <div class="col-lg-5">
+    <div class="card p-3 h-100">
+      <h6 class="mb-1">Estoque por categoria</h6>
+      <p class="text-muted small mb-3">Quantidade total acumulada</p>
+      <div style="height:250px"><canvas id="invPie"></canvas></div>
+    </div>
+  </div>
+  <div class="col-lg-7">
+    <div class="card p-3 h-100">
+      <h6 class="mb-1">Itens com maior quantidade</h6>
+      <p class="text-muted small mb-3">Top itens em estoque</p>
+      <div style="height:250px"><canvas id="invBar"></canvas></div>
+    </div>
+  </div>
+</div>
+
+{% for cat, label in categories %}
+  {% if grouped[cat] is defined %}
+  <div class="card mb-3">
+    <div class="card-header bg-white"><strong>{{ label }}</strong></div>
+    <div class="table-responsive">
+      <table class="table align-middle mb-0">
+        <thead class="table-light"><tr><th>Item</th><th class="text-end">Quantidade</th><th></th></tr></thead>
+        <tbody>
+        {% for i in grouped[cat] %}
+          <tr class="{{ i.isLow ? 'table-warning' : '' }}">
+            <td>{{ i.name }}{% if i.isLow %} <span class="badge bg-warning text-dark">baixo</span>{% endif %}</td>
+            <td class="text-end fw-medium">{{ i.quantity|number_format(i.quantity == i.quantity|round ? 0 : 2, ',', '.') }} {{ i.unit }}</td>
+            <td class="text-end"><a href="{{ path('inventory_show', {id:i.id}) }}" class="btn btn-sm btn-outline-primary">Movimentar</a></td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+  {% endif %}
+{% endfor %}
+
+{% if grouped is empty %}
+  <div class="card p-4 text-center text-muted">Nenhum item cadastrado. Comece adicionando as doações recebidas.</div>
+{% endif %}
+{% endblock %}
+
+{% block javascripts %}
+<script>
+  // ----- Pizza: estoque por categoria -----
+  (function () {
+    var c = {{ byCategory|json_encode|raw }};
+    AppCharts.pie('invPie', Object.keys(c), Object.values(c), {
+      emptyText: 'Nenhum item em estoque'
+    });
+  })();
+
+  // ----- Barras horizontais: itens com maior quantidade -----
+  (function () {
+    var t = {{ topItems|json_encode|raw }};
+    AppCharts.barH('invBar', Object.keys(t), Object.values(t), {
+      emptyText: 'Nenhum item cadastrado'
+    });
+  })();
+</script>
+{% endblock %}

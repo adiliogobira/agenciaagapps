@@ -1,0 +1,23 @@
+{% extends 'layout/base.html.twig' %}
+{% block title %}Registrar diácono{% endblock %}
+{% block body %}
+<h4 class="mb-3">Registrar novo diácono</h4>
+<div class="card p-4" style="max-width:560px">
+  <form method="post" action="{{ path('deacon_manage_new') }}">
+    <input type="hidden" name="_token" value="{{ csrf_token('new_deacon') }}">
+    <div class="mb-3">
+      <label class="form-label">Membro a ordenar como diácono</label>
+      <select name="member_id" class="form-select" required>
+        <option value="">— selecione —</option>
+        {% for m in available %}
+          <option value="{{ m.id }}">{{ m.fullName }}</option>
+        {% else %}
+          <option disabled>Todos os membros já são diáconos.</option>
+        {% endfor %}
+      </select>
+    </div>
+    <button class="btn btn-primary">Registrar como diácono</button>
+    <a href="{{ path('deacon_manage_index') }}" class="btn btn-outline-secondary">Cancelar</a>
+  </form>
+</div>
+{% endblock %}

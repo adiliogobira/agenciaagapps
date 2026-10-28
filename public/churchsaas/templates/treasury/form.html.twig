@@ -1,0 +1,22 @@
+{% extends 'layout/base.html.twig' %}
+{% block title %}Novo lançamento{% endblock %}
+{% block body %}
+<h4 class="mb-3">Novo lançamento financeiro</h4>
+<div class="card p-4" style="max-width:680px">
+  {{ form_start(form) }}
+  <div class="row g-3">
+    <div class="col-md-4">{{ form_row(form.direction) }}</div>
+    <div class="col-md-4">{{ form_row(form.kind) }}</div>
+    <div class="col-md-4">{{ form_row(form.amount) }}</div>
+    <div class="col-md-4">{{ form_row(form.occurredAt) }}</div>
+    <div class="col-md-4">{{ form_row(form.paymentMethod) }}</div>
+    <div class="col-md-4">{{ form_row(form.category) }}</div>
+    <div class="col-md-6">{{ form_row(form.member) }}</div>
+    <div class="col-md-6">{{ form_row(form.campaign) }}</div>
+    <div class="col-12">{{ form_row(form.description) }}</div>
+  </div>
+  <div class="mt-4"><button class="btn btn-primary">Salvar</button>
+    <a href="{{ path('treasury_index') }}" class="btn btn-outline-secondary">Cancelar</a></div>
+  {{ form_end(form) }}
+</div>
+{% endblock %}
